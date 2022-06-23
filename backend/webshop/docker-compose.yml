@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  webshop:
+    image: postgres
+    container_name: kalyani
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_USER: superuser
+      POSTGRES_DB: kalyani
