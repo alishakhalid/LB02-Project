@@ -1,15 +1,15 @@
 package com.tbz.webshop.domain.clothing;
 
+import com.tbz.webshop.domain.cart.Cart;
+
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
 public interface ClothingService {
-    List<Clothing> getAllClothings() throws NullPointerException;
-    Clothing getClothingById(UUID id) throws InstanceNotFoundException;
-    Clothing createClothing(Clothing clothing) throws InstanceAlreadyExistsException, NullPointerException;
-    void deleteClothing(UUID id) throws InstanceNotFoundException;
-    Clothing updateClothingById(UUID id, Clothing updatesClothing) throws InstanceNotFoundException, InstanceAlreadyExistsException;
-
+    List<Clothing> findAllClothings() throws NullPointerException;
+    Clothing findClothingById(UUID id) throws InstanceNotFoundException;
+    void deleteClothingFromCart(UUID id) throws InstanceNotFoundException;
+    Cart addClothingToCart(Cart cart) throws InstanceAlreadyExistsException, NullPointerException;
 }

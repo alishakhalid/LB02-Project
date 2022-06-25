@@ -1,7 +1,7 @@
 package com.tbz.webshop.domain.customer;
 
+import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.country.Country;
-import com.tbz.webshop.domain.customerLogin.CustomerLogin;
 import com.tbz.webshop.domain.location.Location;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +11,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.UUID;
+
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Getter
@@ -36,19 +38,25 @@ public class Customer {
     @Column(nullable = false, name = "customer_address")
     private String customerAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "country_id", nullable = false, referencedColumnName = "country_id")
+    @Column(nullable = false, name = "customer_username")
+    private String customerUsername;
+
+    @Column(nullable = false, name = "customer_password")
+    private String customerPassword;
+
+    @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
+    @JoinColumn(name = "id_country", nullable = false, referencedColumnName = "country_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "location_id", nullable = false, referencedColumnName = "location_id")
+    @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
+    @JoinColumn(name = "id_location", nullable = false, referencedColumnName = "location_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_login_id", nullable = false, referencedColumnName = "customer_login_id")
+    @JoinColumn(name = "id_cart", nullable = false, referencedColumnName = "cart_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private CustomerLogin customerLogin;
+    private Cart cart;
 
 }

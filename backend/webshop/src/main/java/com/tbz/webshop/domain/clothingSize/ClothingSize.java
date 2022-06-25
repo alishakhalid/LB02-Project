@@ -16,6 +16,7 @@ public class ClothingSize {
     @Column(name = "clothing_size_id")
     private UUID clothingSizeId;
 
-    @Column(nullable = false, name = "clothing_size")
-    private String clothingSize;
+    @Column(nullable = false, name = "clothing_size", length = 3)
+    @Enumerated(EnumType.STRING)
+    private ClothingSizeEnum clothingSize;
 }

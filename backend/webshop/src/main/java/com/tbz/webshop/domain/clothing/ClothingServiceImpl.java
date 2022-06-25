@@ -1,35 +1,76 @@
 package com.tbz.webshop.domain.clothing;
 
+
+import com.tbz.webshop.domain.cart.Cart;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class ClothingServiceImpl implements ClothingService{
 
+    @Autowired
+    private ClothingRepository clothingRepository;
 
+    protected Logger logger;
+
+    /**
+     * This method is responsible for getting all the clothings itemm from the database
+     * @return all the Clothing items with their ids or the matching exception
+     * @throws NullPointerException for when the Clothing item list is empty
+     */
     @Override
-    public List<Clothing> getAllClothings() throws NullPointerException {
-        return null;
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public List<Clothing> findAllClothings() throws NullPointerException {
+        logger.debug("Attempting to find all Clothes");
+
+        List<Clothing> clothingList = this.clothingRepository.findAll();
+
+        if(!(clothingList.isEmpty() || clothingList == null)){
+            return clothingList;
+        } else
+            throw new NullPointerException("Clothing List is empty");
+    }
+    /**
+     * This method is responsible for getting a specific Clothing item. Calls the method in the clothingRepository that
+     * gets the Clothing item with the given ID from the database.
+     * @param id Id of the Clothing item that should be displayed
+     * @return returns the Clothing item according to the Id
+     * @throws InstanceNotFoundException if the given Id does not match an existing Clothing item
+     */
+    @Override
+    public Clothing findClothingById(UUID id) throws InstanceNotFoundException {
+        Optional<Clothing> optionalClothing = this.clothingRepository.findById(id);
+
+        if(optionalClothing.isEmpty()) {
+            throw new InstanceNotFoundException("Clothing item does not exist");
+        }
+        return optionalClothing.get();
+    }
+    /**
+     * This method deletes one clothing item by its id and calls the delete method from the clothingRepository.
+     *
+     * @param id is the identifier for the name of the clothing item which should be deleted
+     * @throws InstanceNotFoundException if no clothing item by this id exists
+     */
+    @Override
+    public void deleteClothingFromCart(UUID id) throws InstanceNotFoundException {
+        if (!clothingRepository.existsById(id)) {
+            throw new InstanceNotFoundException("Clothing item does not exist");
+        }
+        clothingRepository.deleteById(id);
     }
 
     @Override
-    public Clothing getClothingById(UUID id) throws InstanceNotFoundException {
-        return null;
-    }
-
-    @Override
-    public Clothing createClothing(Clothing clothing) throws InstanceAlreadyExistsException, NullPointerException {
-        return null;
-    }
-
-    @Override
-    public void deleteClothing(UUID id) throws InstanceNotFoundException {
-
-    }
-
-    @Override
-    public Clothing updateClothingById(UUID id, Clothing updatesClothing) throws InstanceNotFoundException, InstanceAlreadyExistsException {
+    public Cart addClothingToCart(Cart cart) throws InstanceAlreadyExistsException {
         return null;
     }
 }
