@@ -18,11 +18,11 @@ public interface CustomerService {
     Cart addProductToCartByCustomerId(Cart cart, Customer uuid) throws InstanceAlreadyExistsException, NullPointerException;
 
     //TODO cart should be created parallel
-    Customer createCustomer(Customer customer) throws InstanceAlreadyExistsException, NullPointerException;
+    UUID registerUser(Customer customer) throws InstanceAlreadyExistsException, NullPointerException;
 
-    List<Location> findAllLocation() throws NullPointerException;
+    List<Location> findAllLocation() throws NullPointerException, InstanceNotFoundException;
 
-    List<Country> findAllCountries() throws NullPointerException;
+    List<Country> findAllCountries() throws NullPointerException, InstanceNotFoundException;
 
     public boolean existsByCredentials(String username, String password) throws NoSuchElementException;
 }

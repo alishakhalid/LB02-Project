@@ -1,11 +1,13 @@
 package com.tbz.webshop.domain.order;
 
 import com.tbz.webshop.domain.customer.Customer;
+import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class OrderingServiceImpl implements OrderingService{
     @Override
     public Order createOrderingByCustomerId(Order order, Customer customerId) throws InstanceAlreadyExistsException, NullPointerException {

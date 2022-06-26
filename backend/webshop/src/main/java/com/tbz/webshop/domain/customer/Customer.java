@@ -38,9 +38,6 @@ public class Customer {
     @Column(nullable = false, name = "customer_address")
     private String customerAddress;
 
-    @Column(nullable = false, name = "customer_username")
-    private String customerUsername;
-
     @Column(nullable = false, name = "customer_password")
     private String customerPassword;
 
@@ -59,4 +56,15 @@ public class Customer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cart cart;
 
+    public Customer(UUID customerId, String customerSurname, String customerLastname, String customerEmail, String customerAddress, String customerPassword, Country country, Location location, Cart cart) {
+        this.customerId = customerId;
+        this.customerSurname = customerSurname;
+        this.customerLastname = customerLastname;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+        this.customerPassword = customerPassword;
+        this.country = country;
+        this.location = location;
+        this.cart = cart;
+    }
 }
