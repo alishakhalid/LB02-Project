@@ -4,7 +4,6 @@ package com.tbz.webshop.domain.clothing;
 import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.clothingSize.ClothingSize;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -23,7 +22,6 @@ public class ClothingServiceImpl implements ClothingService{
     @Autowired
     private ClothingRepository clothingRepository;
 
-    protected Logger logger;
 
     /**
      * This method is responsible for getting all the clothings itemm from the database
@@ -33,8 +31,6 @@ public class ClothingServiceImpl implements ClothingService{
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<Clothing> findAllClothings() throws NullPointerException {
-        logger.debug("Attempting to find all Clothes");
-
         List<Clothing> clothingList = this.clothingRepository.findAll();
 
         if(!(clothingList.isEmpty() || clothingList == null)){

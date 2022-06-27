@@ -41,7 +41,7 @@ public class Customer {
     private String customerAddress;
 
     @Column(nullable = false, name = "customer_password")
-    private String customerPassword;
+    private String password;
 
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
     @JoinColumn(name = "id_country", nullable = false, referencedColumnName = "country_id")

@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -32,14 +33,15 @@ public class Clothing {
     @Column(nullable = false, name = "clothing_price")
     private Double clothingPrice;
 
-    @Column(nullable = false, name = "clothing_type", length = 3)
+    @Column(nullable = false, name = "clothing_type", length = 10)
     @Enumerated(EnumType.STRING)
     private ClothingTypeEnum clothingTypeEnum;
 
     @Column(nullable = false, name = "clothing_description")
     private String clothingDescription;
 
-    @Column(nullable = false, name = "clothing_image")
+    @Column(nullable = true, name = "clothing_image")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] clothingImage;
 
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)

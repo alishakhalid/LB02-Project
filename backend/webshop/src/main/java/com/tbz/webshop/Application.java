@@ -30,11 +30,5 @@ public class Application extends SpringBootServletInitializer {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	CommandLineRunner run(CustomerService customerService, ClothingService clothingService) {
-		return args -> {
-			clothingService.
-		};
-	}
 
 }

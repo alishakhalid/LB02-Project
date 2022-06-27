@@ -24,10 +24,10 @@ public class OrderingServiceImpl implements OrderingService{
 
     private CustomerService customerService;
 
-    @Override
-        public Order createOrderingByPrincipalId(Order order, @AuthenticationPrincipal Principal principal) throws InstanceAlreadyExistsException, NullPointerException {
+    //@Override
+      //  public Order createOrderingByPrincipalId(Order order, @AuthenticationPrincipal Principal principal) throws InstanceAlreadyExistsException, NullPointerException {
             
-    }
+    //}
 
 
     @Override
