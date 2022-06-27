@@ -6,6 +6,8 @@ import com.tbz.webshop.domain.country.Country;
 import com.tbz.webshop.domain.country.CountryRepository;
 import com.tbz.webshop.domain.location.Location;
 import com.tbz.webshop.domain.location.LocationRepository;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,25 +19,36 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@NoArgsConstructor
+@Slf4j
 public class CustomerServiceImpl implements CustomerService{
 
     @Autowired
-    public CustomerRepository customerRepository;
-
+    public  CustomerRepository customerRepository;
     @Autowired
     public LocationRepository locationRepository;
-
     @Autowired
     public CountryRepository countryRepository;
 
+
     @Override
     public Customer findCustomerById(UUID id) throws InstanceNotFoundException {
-        Optional<Customer> optionalCustomer = this.customerRepository.findById(id);
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
 
-        if(optionalCustomer.isEmpty()) {
+        if(optionalCustomer.isEmpty() || optionalCustomer == null) {
             throw new InstanceNotFoundException("Customer does not exist");
-        }
-        return optionalCustomer.get();
+        } else
+            return optionalCustomer.get();
+    }
+
+    @Override
+    public Customer findCustomerByCustomerEmail(String email) throws InstanceNotFoundException {
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByCustomerEmail(email);
+
+        if(optionalCustomer.isEmpty() || optionalCustomer == null) {
+            throw new InstanceNotFoundException("Customer does not exist");
+        } else
+            return optionalCustomer.get();
     }
 
     //TODO
@@ -51,20 +64,20 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public UUID registerUser(Customer customer) throws InstanceAlreadyExistsException, NullPointerException {
+    public Customer registerUser(Customer customer) throws InstanceAlreadyExistsException, NullPointerException {
         if (customer.getCustomerEmail().isEmpty() || customer.getCustomerPassword().isEmpty() || customer.getCustomerSurname().isEmpty()) {
             throw new NullPointerException("All values are required");
-        } else if (customerRepository.existsByEmail(customer.getCustomerEmail())) {
+        } else if (customerRepository.existsByCustomerEmail(customer.getCustomerEmail())) {
             throw new InstanceAlreadyExistsException("Customer with this email already exists");
         } else {
             customerRepository.save(customer);
-            return customer.getCustomerId();
+            return customer;
         }
     }
 
     @Override
     public List<Location> findAllLocation() throws NullPointerException {
-        List<Location> locationList = this.locationRepository.findAll();
+        List<Location> locationList = locationRepository.findAll();
 
         if(!(locationList.isEmpty() || locationList == null)){
             return locationList;
@@ -74,12 +87,13 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public List<Country> findAllCountries() throws NullPointerException {
-        List<Country> countryList = this.countryRepository.findAll();
+        List<Country> countryList = countryRepository.findAll();
 
         if(!(countryList.isEmpty() || countryList == null)){
             return countryList;
         } else
             throw new NullPointerException("Country List is empty");
+
     }
 
     @Override

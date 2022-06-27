@@ -4,6 +4,7 @@ import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.country.Country;
 import com.tbz.webshop.domain.location.Location;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
@@ -18,10 +19,11 @@ import static javax.persistence.FetchType.EAGER;
 @Getter
 @Setter
 @Table(name = "customer")
+@NoArgsConstructor
 public class Customer {
 
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @Column(name = "customer_id")
     private UUID customerId;
@@ -56,15 +58,5 @@ public class Customer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cart cart;
 
-    public Customer(UUID customerId, String customerSurname, String customerLastname, String customerEmail, String customerAddress, String customerPassword, Country country, Location location, Cart cart) {
-        this.customerId = customerId;
-        this.customerSurname = customerSurname;
-        this.customerLastname = customerLastname;
-        this.customerEmail = customerEmail;
-        this.customerAddress = customerAddress;
-        this.customerPassword = customerPassword;
-        this.country = country;
-        this.location = location;
-        this.cart = cart;
-    }
+
 }

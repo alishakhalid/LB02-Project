@@ -2,6 +2,7 @@ package com.tbz.webshop.domain.cartClothing;
 
 import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.clothing.Clothing;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "Cart_Clothing")
+@NoArgsConstructor
 public class CartClothing {
 
     @Id

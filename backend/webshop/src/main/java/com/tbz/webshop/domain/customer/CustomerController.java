@@ -1,26 +1,27 @@
 package com.tbz.webshop.domain.customer;
 
-import com.tbz.webshop.domain.cart.Cart;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import java.util.UUID;
 
-@Controller
+
+@RestController
+@RequestMapping(value = {"/customer"})
+@Slf4j
 public class CustomerController {
 
     @Autowired
     public CustomerService customerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity findCustomerById(UUID id){
+    public ResponseEntity findCustomerById(@PathVariable UUID id){
+
         try {
             return ResponseEntity.status(HttpStatus.OK).body(customerService.findCustomerById(id));
         } catch (InstanceNotFoundException e) {
@@ -29,6 +30,19 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/{email}")
+    public ResponseEntity findCustomerByEmail(@PathVariable String email){
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(customerService.findCustomerByCustomerEmail(email));
+        } catch (InstanceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity registerCustomer(@RequestBody Customer customer) {
@@ -43,7 +57,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/location")
     public ResponseEntity findAllLocations(){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(customerService.findAllLocation());
@@ -54,7 +68,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/country")
     public ResponseEntity findAllCountries(){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(customerService.findAllCountries());
@@ -64,8 +78,5 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
-
-
 
 }

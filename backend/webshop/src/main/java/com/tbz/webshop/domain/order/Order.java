@@ -3,6 +3,7 @@ package com.tbz.webshop.domain.order;
 import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.customer.Customer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
@@ -19,6 +20,7 @@ import static javax.persistence.FetchType.EAGER;
 @Getter
 @Setter
 @Table(name = "ordering")
+@NoArgsConstructor
 public class Order {
 
     @Id

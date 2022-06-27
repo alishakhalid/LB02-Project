@@ -1,5 +1,6 @@
 package com.tbz.webshop.domain.cart;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "cart")
+@NoArgsConstructor
 public class Cart {
 
     @Id

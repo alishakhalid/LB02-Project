@@ -1,6 +1,7 @@
 package com.tbz.webshop.domain.location;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "location")
 public class Location {
 
@@ -23,5 +25,6 @@ public class Location {
     private String locationName;
 
     @Column(nullable = false, unique = true, name = "postal_code")
-    private Number postalCode;
+        private String postalCode;
+
 }

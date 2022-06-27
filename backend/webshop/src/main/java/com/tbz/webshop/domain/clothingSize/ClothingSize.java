@@ -1,6 +1,7 @@
 package com.tbz.webshop.domain.clothingSize;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name="clothing_size")
 @Getter
+@NoArgsConstructor
 public class ClothingSize {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -19,4 +21,5 @@ public class ClothingSize {
     @Column(nullable = false, name = "clothing_size", length = 3)
     @Enumerated(EnumType.STRING)
     private ClothingSizeEnum clothingSize;
+
 }

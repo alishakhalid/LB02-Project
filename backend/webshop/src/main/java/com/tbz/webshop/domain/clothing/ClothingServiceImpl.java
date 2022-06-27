@@ -2,6 +2,8 @@ package com.tbz.webshop.domain.clothing;
 
 
 import com.tbz.webshop.domain.cart.Cart;
+import com.tbz.webshop.domain.clothingSize.ClothingSize;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@NoArgsConstructor
 public class ClothingServiceImpl implements ClothingService{
 
     @Autowired
@@ -72,6 +75,11 @@ public class ClothingServiceImpl implements ClothingService{
     //TODO create method?
     @Override
     public Cart addClothingToCart(Cart cart) throws InstanceAlreadyExistsException {
+        return null;
+    }
+
+    @Override
+    public ClothingSize addClothingSize(ClothingSize clothingSize) throws InstanceAlreadyExistsException, NullPointerException {
         return null;
     }
 }
