@@ -4,14 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("origins")
 @RequestMapping(value = {"/order"})
 @Slf4j
 public class OrderController {
@@ -28,10 +26,10 @@ public class OrderController {
         }
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity findOrderByCustomerId(@PathVariable UUID customerId){
+    @GetMapping("/{id}")
+    public ResponseEntity findOrderByCustomerId(@PathVariable UUID id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(orderingService.findOrderByCustomerId(customerId));
+            return ResponseEntity.status(HttpStatus.OK).body(orderingService.findOrderByCustomerId(id));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

@@ -7,7 +7,6 @@ import com.tbz.webshop.domain.location.Location;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public interface CustomerService {
@@ -15,16 +14,15 @@ public interface CustomerService {
 
     Customer findCustomerByCustomerEmail(String email) throws InstanceNotFoundException;
 
-    Cart findCartByCustomerId(UUID customerId) throws NoSuchElementException;
+    Cart findCartByCustomerId(UUID customerId) throws InstanceNotFoundException;
 
-    Cart addProductToCartByCustomerId(Cart cart, Customer uuid) throws InstanceAlreadyExistsException, NullPointerException;
-
-    //TODO cart should be created parallel
     Customer registerUser(Customer customer) throws InstanceAlreadyExistsException, NullPointerException;
+
+    Cart createCartByCustomerId(Cart cart, UUID customerId) throws InstanceAlreadyExistsException, NullPointerException;
 
     List<Location> findAllLocation() throws NullPointerException, InstanceNotFoundException;
 
     List<Country> findAllCountries() throws NullPointerException, InstanceNotFoundException;
 
-    public boolean existsByCredentials(String username, String password) throws NoSuchElementException;
+    //Customer existsByCredentials(String username, String password) throws NoSuchElementException;
 }

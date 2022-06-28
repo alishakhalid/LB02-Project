@@ -11,6 +11,7 @@ import javax.management.InstanceNotFoundException;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("origins")
 @RequestMapping(value = {"/clothing"})
 public class ClothingController {
 
@@ -73,7 +74,7 @@ public class ClothingController {
      * @param clothingItem the information that is needed to add a new item to a cart that is given through the requestBody
      * @return either returns the newly added item or the error message that the item was not added
      */
-    @PostMapping
+    @PostMapping(value = "/cart")
     public ResponseEntity addClothingToCart(@RequestBody Cart clothingItem) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(clothingService.addClothingToCart(clothingItem));
@@ -83,6 +84,15 @@ public class ClothingController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/clothingSizes")
+    public ResponseEntity findAllClothingSizes(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(clothingService.findAllClothingSizes());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 

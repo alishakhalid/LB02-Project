@@ -26,12 +26,12 @@ public class CartClothing {
     private int amount;
 
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
-    @JoinColumn(name = "id_clothing", updatable = false, insertable = false,
+    @JoinColumn(name = "id_clothing", updatable = false, insertable = false, nullable = false,
             referencedColumnName = "clothing_id")
     private Clothing clothing;
 
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
-    @JoinColumn(name = "id_cart", updatable = false, insertable = false,
+    @JoinColumn(name = "id_cart", updatable = false, insertable = false, nullable = false,
             referencedColumnName = "cart_id")
     private Cart cart;
 }
