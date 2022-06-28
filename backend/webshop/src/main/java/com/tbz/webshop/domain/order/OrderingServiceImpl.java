@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @Service
 @NoArgsConstructor
+@Transactional
 public class OrderingServiceImpl implements OrderingService{
 
 
@@ -24,11 +26,11 @@ public class OrderingServiceImpl implements OrderingService{
 
     private CustomerService customerService;
 
-    //@Override
-      //  public Order createOrderingByPrincipalId(Order order, @AuthenticationPrincipal Principal principal) throws InstanceAlreadyExistsException, NullPointerException {
-            
-    //}
-
+    @Override
+    // TODO
+    public Order createOrderingByCustomerId(Order order,UUID customerId) throws InstanceAlreadyExistsException, NullPointerException {
+        return null;
+    }
 
     @Override
     public List<Order> findAllOrders() throws NullPointerException {
@@ -43,10 +45,10 @@ public class OrderingServiceImpl implements OrderingService{
     @Override
     public Order findOrderByCustomerId(UUID customerId) throws NullPointerException {
 
-        Optional<Order> optionalOrder = orderRepository.findOrderByCustomerCustomerId(customerId);
+        Optional<Order> optionalOrder = orderRepository.findOrderByCustomerId(customerId);
 
         if(optionalOrder.isEmpty() || optionalOrder == null) {
-            throw new NullPointerException("Customer does not exist");
+            throw new NullPointerException("Customer's Order does not exist");
         } else
             return optionalOrder.get();
     }

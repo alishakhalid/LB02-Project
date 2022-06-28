@@ -18,7 +18,9 @@ import static javax.persistence.FetchType.EAGER;
 @Entity
 @Getter
 @Setter
-@Table(name = "customer")
+@Table(name = "customer",indexes = {
+        @Index(columnList = "customer_email"),
+        @Index(columnList = "customer_password")})
 @NoArgsConstructor
 public class Customer {
 
@@ -53,8 +55,8 @@ public class Customer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_cart", nullable = false, referencedColumnName = "cart_id")
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "id_cart", nullable = true, referencedColumnName = "cart_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cart cart;
 

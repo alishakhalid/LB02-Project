@@ -3,6 +3,7 @@ package com.tbz.webshop.domain.clothing;
 
 import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.clothingSize.ClothingSize;
+import com.tbz.webshop.domain.clothingSize.ClothingSizeRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,13 @@ import java.util.UUID;
 
 @Service
 @NoArgsConstructor
+@Transactional
 public class ClothingServiceImpl implements ClothingService{
 
     @Autowired
     private ClothingRepository clothingRepository;
+    @Autowired
+    private ClothingSizeRepository clothingSizeRepository;
 
 
     /**
@@ -75,7 +79,12 @@ public class ClothingServiceImpl implements ClothingService{
     }
 
     @Override
-    public ClothingSize addClothingSize(ClothingSize clothingSize) throws InstanceAlreadyExistsException, NullPointerException {
-        return null;
+    public List<ClothingSize> findAllClothingSizes() throws NullPointerException {
+        List<ClothingSize> clothingSizeList = this.clothingSizeRepository.findAll();
+
+        if(!(clothingSizeList.isEmpty() || clothingSizeList == null)){
+            return clothingSizeList;
+        } else
+            throw new NullPointerException("Clothing Size List is empty");
     }
 }

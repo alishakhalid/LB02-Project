@@ -13,5 +13,6 @@ public interface ClothingService {
     Clothing findClothingById(UUID id) throws InstanceNotFoundException;
     void deleteClothingFromCart(UUID id) throws InstanceNotFoundException;
     Cart addClothingToCart(Cart cart) throws InstanceAlreadyExistsException, NullPointerException;
-    ClothingSize addClothingSize(ClothingSize clothingSize) throws InstanceAlreadyExistsException, NullPointerException;
+    List<ClothingSize> findAllClothingSizes() throws NullPointerException;
+
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OrderingService {
-    //Order createOrderingByPrincipalId(Order order, Principal principal) throws InstanceAlreadyExistsException, NullPointerException;
+    Order createOrderingByCustomerId(Order order, UUID customerId) throws InstanceAlreadyExistsException, NullPointerException;
     List<Order> findAllOrders() throws NullPointerException;
     Order findOrderByCustomerId(UUID customerId) throws NullPointerException;
 }

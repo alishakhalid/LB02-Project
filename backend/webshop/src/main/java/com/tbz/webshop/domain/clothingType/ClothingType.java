@@ -1,30 +1,25 @@
-package com.tbz.webshop.domain.cart;
+package com.tbz.webshop.domain.clothingType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "cart")
+@Table(name="clothing_type")
 @Getter
-@Setter
 @NoArgsConstructor
-public class Cart {
-
+public class ClothingType {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-    @Column(name = "cart_id")
-    private UUID cartId;
+    @Column(name = "clothing_type_id")
+    private UUID clothingTypeId;
 
-    @Column(name = "shipping_price")
-    private double shippingPrice;
-
-    @Column(name = "total_price", nullable = false)
-    private double totalPrice;
+    @Column(nullable = false, name = "clothing_type")
+    @Enumerated(EnumType.STRING)
+    private ClothingTypeEnum clothingType;
 
 }
