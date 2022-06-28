@@ -1,190 +1,312 @@
-import React, { useState } from "react";
-import { Form, Field, Formik, FormikHelpers } from "formik";
-import * as yup from "yup";
-import { RegistrationType } from "../../types/RegistrationType";
+import React, { useEffect, useState } from "react";
 import {
-  TextField,
-  Typography,
-  Button,
-  Container,
-  Autocomplete,
   Grid,
-  Box,
-} from "@mui/material";
+  TextField,
+  Button,
+  makeStyles,
+  createStyles,
+  Theme,
+} from "@material-ui/core";
+import { Formik, Form, FormikProps } from "formik";
+import * as yup from "yup";
+import Header from "../molecules/Header";
+import Footer from "../organisms/Footer";
+import "../../styling/Registration.css";
+import { RegistrationType } from "../../types/RegistrationType";
+import { Autocomplete, Typography } from "@mui/material";
+import TextButton from "../atoms/Button";
+import CustomerService from "../../services/CustomerService";
+import CountryService from "../../services/CountryService";
+import ApiService from "../../services/ApiService";
 
-const initialValues: RegistrationType = {
-  surname: "",
-  lastname: "",
-  email: "",
-  address: "",
-  postal_code: "",
-  country: "",
-  username: "",
-  password: "",
-};
+const countries = ["Switzerland", "Pakistan"];
 
-const validation = yup.object().shape({
-  surname: yup.string().required("Surname is a Required field"),
-  lastname: yup.string().required("Required is a Required field"),
-  email: yup.string().email("Email is invalid").required("Required"),
-  address: yup.string().required("Address is a Required field."),
-  postal_code: yup.string().required("Required field"),
-  password: yup.string().min(8, "Must be 8 characters").required("Required"),
-});
-
-const topFilms = ["Switzerland", "Pakistan"];
 const Registrate = () => {
-  const [value, setValue] = useState<string | null>();
-  const [inputValue, setInputValue] = useState("");
+  const [country, setCountry] = useState([]);
+
+  const getCountries = () => {
+    return CountryService.getCountries()
+      .then((res) => setCountry(res.data))
+      .catch((err) => console.log(err, "failed"));
+  };
+
+  const createUser = (values: RegistrationType) => {
+    return CustomerService.createCustomer(values);
+  };
+
+  const initialValues: RegistrationType = {
+    customer_surname: "",
+    customer_lastname: "",
+    customer_email: "",
+    customer_address: "",
+    postal_code: "",
+    country_name: "",
+    customer_password: "",
+  };
+
+  const passwordMatch =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}S$/;
+
+  const validationSchema = yup.object().shape({
+    customer_surname: yup.string().required("Surname is a Required field"),
+    customer_lastname: yup.string().required("Required is a Required field"),
+    customer_email: yup.string().email("Email is invalid").required("Required"),
+    customer_address: yup.string().required("Address is a Required field."),
+    postal_code: yup.string().required("Required field"),
+    country_name: yup.string().required("Please choose a country"),
+    customer_password: yup.string().min(8).required("Please set a password"),
+  });
+
+  const handleSubmit = (values: RegistrationType): void => {
+    createUser(values);
+    alert(JSON.stringify(values));
+  };
+
+  useEffect(() => {
+    getCountries();
+    console.log(country, "HeY");
+  }, []);
 
   return (
-    <Container>
-      <Box sx={{ bgcolor: "#B2DFDB", height: "100vh" }}>
+    <>
+      <Header />
+      <div className="registrationForm">
         <Formik
           initialValues={initialValues}
-          onSubmit={(
-            values: RegistrationType,
-            { setSubmitting }: FormikHelpers<RegistrationType>
-          ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
-          }}
-          validateOnBlur={false}
-          validateOnChange={false}
-          validationSchema={validation}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
         >
-          {({ values }) => (
-            <Form>
-              <Grid item container spacing={3}>
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  component="div"
-                  style={{ textAlign: "center" }}
-                >
-                  CREATE ACCOUNT
-                </Typography>
-                <Grid container direction="row" xs={12}>
-                  <Grid container direction="row" xs={5}>
+          {(props: FormikProps<RegistrationType>) => {
+            const {
+              values,
+              touched,
+              errors,
+              handleBlur,
+              handleChange,
+              isSubmitting,
+            } = props;
+            return (
+              <Form>
+                <h1 className="title">CREATE ACCOUNT</h1>
+                <Grid container justify="space-around" direction="row">
+                  <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
                     <TextField
+                      fullWidth
+                      name="customer_surname"
+                      id="customer_surname"
                       label="Surname"
                       variant="outlined"
-                      fullWidth
+                      value={values.customer_surname}
                       type="text"
-                      placeholder="Max"
+                      helperText={
+                        errors.customer_surname && touched.customer_surname
+                          ? errors.customer_surname
+                          : null
+                      }
+                      error={
+                        errors.customer_surname && touched.customer_surname
+                          ? true
+                          : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                     />
                   </Grid>
-                  <Grid container direction="row" xs={2}></Grid>
-                  <Grid container direction="row" xs={5}>
+                  <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
                     <TextField
+                      fullWidth
+                      name="customer_lastname"
+                      id="customer_lastname"
                       label="Lastname"
                       variant="outlined"
-                      fullWidth
+                      value={values.customer_lastname}
                       type="text"
-                      name="lastname"
-                      placeholder="Muster"
+                      helperText={
+                        errors.customer_lastname && touched.customer_lastname
+                          ? errors.customer_lastname
+                          : null
+                      }
+                      error={
+                        errors.customer_lastname && touched.customer_lastname
+                          ? true
+                          : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                     />
                   </Grid>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    label="E-Mail"
-                    variant="outlined"
-                    fullWidth
-                    type="email"
-                    name="email"
-                    placeholder="maxmuster@gmail.com"
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Address"
-                    variant="outlined"
-                    fullWidth
-                    type="text"
-                    name="address"
-                    placeholder="Zurich"
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Postal code"
-                    variant="outlined"
-                    fullWidth
-                    type="text"
-                    name="postalCode"
-                    placeholder="8005"
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Autocomplete
-                    value={value}
-                    onChange={(event: any, newValue: string | null) => {
-                      setValue(newValue);
-                    }}
-                    inputValue={inputValue}
-                    onInputChange={(event, newInputValue) => {
-                      setInputValue(newInputValue);
-                    }}
-                    id="country"
-                    options={topFilms}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Country" />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  {" "}
-                  <TextField
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                    type="text"
-                    name="username"
-                    placeholder="max.muster"
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  {" "}
-                  <TextField
-                    label="Password"
-                    variant="outlined"
-                    fullWidth
-                    type="password"
-                    name="password"
-                    required
-                  />
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  style={{ justifySelf: "flex-end" }}
-                >
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    color="primary"
-                    href="https://www.figma.com/file/7GNm1ykQhndcDxlnmqkd1P/Modul133_Mockup?node-id=2%3A5"
+                  <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
+                    <TextField
+                      fullWidth
+                      name="customer_address"
+                      id="customer_address"
+                      label="Address"
+                      variant="outlined"
+                      value={values.customer_address}
+                      type="text"
+                      helperText={
+                        errors.customer_address && touched.customer_address
+                          ? errors.customer_address
+                          : null
+                      }
+                      error={
+                        errors.customer_address && touched.customer_address
+                          ? true
+                          : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                    />
+                  </Grid>
+                  <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
+                    <TextField
+                      fullWidth
+                      name="postal_code"
+                      id="postal_code"
+                      label="Postal Code"
+                      variant="outlined"
+                      value={values.postal_code}
+                      type="text"
+                      helperText={
+                        errors.postal_code && touched.postal_code
+                          ? errors.postal_code
+                          : null
+                      }
+                      error={
+                        errors.postal_code && touched.postal_code ? true : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    lg={11}
+                    md={11}
+                    sm={11}
+                    xs={11}
+                    className="textfield"
                   >
-                    Submit
-                  </Button>
+                    <Autocomplete
+                      id="country_name"
+                      options={countries}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Country"
+                          variant="outlined"
+                          value={"Switzerland"}
+                          required
+                          helperText={
+                            errors.country_name && touched.country_name
+                              ? errors.country_name
+                              : null
+                          }
+                          error={
+                            errors.country_name && touched.country_name
+                              ? true
+                              : false
+                          }
+                          disabled
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    lg={11}
+                    md={11}
+                    sm={11}
+                    xs={11}
+                    className="textfield"
+                  >
+                    <TextField
+                      fullWidth
+                      name="customer_email"
+                      id="customer_email"
+                      label="Email"
+                      variant="outlined"
+                      value={values.customer_email}
+                      type="email"
+                      helperText={
+                        errors.customer_email && touched.customer_email
+                          ? errors.customer_email
+                          : null
+                      }
+                      error={
+                        errors.customer_email && touched.customer_email
+                          ? true
+                          : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                    />
+                  </Grid>
+
+                  <Grid
+                    item
+                    lg={11}
+                    md={11}
+                    sm={11}
+                    xs={11}
+                    className="textfield"
+                  >
+                    <TextField
+                      fullWidth
+                      name="customer_password"
+                      id="customer_password"
+                      label="Password"
+                      variant="outlined"
+                      value={values.customer_password}
+                      type="password"
+                      helperText={
+                        errors.customer_password && touched.customer_password
+                          ? errors.customer_password
+                          : "One uppercase, one lowercase, one special character and no spaces"
+                      }
+                      error={
+                        errors.customer_password && touched.customer_password
+                          ? true
+                          : false
+                      }
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                    />
+                  </Grid>
+
+                  <Grid
+                    item
+                    lg={11}
+                    md={11}
+                    sm={11}
+                    xs={11}
+                    className="submitButton"
+                  >
+                    <TextButton
+                      disabled={isSubmitting}
+                      color="primary"
+                      text="Create"
+                    >
+                      Submit
+                    </TextButton>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Form>
-          )}
+              </Form>
+            );
+          }}
         </Formik>
-      </Box>
-    </Container>
+      </div>
+      <Footer />
+    </>
   );
 };
+
 export default Registrate;

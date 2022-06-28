@@ -1,10 +1,9 @@
 export interface RegistrationType {
-  surname: string;
-  lastname: string;
-  email: string;
-  address: string;
+  customer_surname: string;
+  customer_lastname: string;
+  customer_email: string;
+  customer_address: string;
   postal_code: string;
-  country: string;
-  username: string;
-  password: string;
+  country_name: string;
+  customer_password: string;
 }

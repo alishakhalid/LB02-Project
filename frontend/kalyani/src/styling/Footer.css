@@ -1,0 +1,37 @@
+body{
+ display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footerWrapper{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+.footer{
+  flex:1;
+  width: 100%;
+  background-color: #4db6ac;
+  height: 100px;
+  text-align: center;
+  margin-bottom: auto;
+  margin-top: auto;
+  position: sticky;
+} 
+
+.css-i4bv87-MuiSvgIcon-root {
+   width: 1.5em !important;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  fill: white !important;
+}

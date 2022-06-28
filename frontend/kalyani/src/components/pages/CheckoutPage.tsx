@@ -1,5 +1,13 @@
 import React from "react";
+import Header from "../molecules/Header";
+import Footer from "../organisms/Footer";
 
 export default function Checkout() {
-  return <div>Checkout</div>;
+  return (
+    <>
+      <Header />
+      <div>Checkout</div>
+      <Footer />
+    </>
+  );
 }

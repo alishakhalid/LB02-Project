@@ -7,13 +7,13 @@ import MultiItemPage from "../components/pages/MultiItemPage";
 import SingleItemPage from "../components/pages/SingleItemPage";
 import Order from "../components/pages/Order";
 import App from "../App";
+import SearchProvider from "../context/SearchContext";
 
 export default function Navigate() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<App />} />
-        <Route path={"/home"} element={<Homepage />} />
+        <Route path={"/"} element={<Homepage />} />
         <Route path={"/clothes"} element={<MultiItemPage />} />
         <Route path={"/clothes/:id"} element={<SingleItemPage />} />
         <Route path={"/checkout"} element={<Checkout />} />

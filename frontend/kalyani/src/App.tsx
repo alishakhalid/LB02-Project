@@ -1,18 +1,12 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import Registrate from "./components/pages/Registration";
-import { CssBaseline } from "@mui/material";
-import { MuiThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@mui/material/styles";
 import theme from "./config/Theme";
 import Navigate from "./Routing/Navigation";
+import SearchProvider from "./context/SearchContext";
 const App = () => {
   return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline>
-        <Navigate />
-      </CssBaseline>
-    </MuiThemeProvider>
+    <ThemeProvider theme={theme}>
+      <Navigate />
+    </ThemeProvider>
   );
 };
 
