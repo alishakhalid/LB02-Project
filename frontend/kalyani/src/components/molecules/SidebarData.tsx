@@ -18,11 +18,11 @@ export const SidebarData: SidebarType[] = [
     subnav: [
       {
         title: "Stitched",
-        path: "/clothes/formal-wear/stitched",
+        path: "/clothes/formal-wear-stitched/1",
       },
       {
         title: "Unstitched",
-        path: "/clothes/formal-wear/unstitched",
+        path: "/clothes/formal-wear-unstitched/1",
       },
     ],
   },
@@ -34,11 +34,11 @@ export const SidebarData: SidebarType[] = [
     subnav: [
       {
         title: "Stitched",
-        path: "/clothes/casual-wear/stitched",
+        path: "/clothes/casual-wear-stitched/1",
       },
       {
         title: "Unstitched",
-        path: "/clothes/casual-wear/unstitched",
+        path: "/clothes/casual-wear-unstitched/1",
       },
     ],
   },

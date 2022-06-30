@@ -88,6 +88,7 @@ function AllClothesPage() {
                           clothing_image={product.clothing_image}
                           clothing_name={product.clothing_name}
                           clothing_price={product.clothing_price}
+                          clothing_type={product.clothing_type}
                         />
                       </Grid>
                     );

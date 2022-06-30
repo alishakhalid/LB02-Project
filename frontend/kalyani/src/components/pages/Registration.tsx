@@ -18,17 +18,30 @@ import TextButton from "../atoms/Button";
 import CustomerService from "../../services/CustomerService";
 import CountryService from "../../services/CountryService";
 import ApiService from "../../services/ApiService";
+import LocationService from "../../services/LocationService";
+import { CityType } from "../../types/CityType";
+import { CountryType } from "../../types/CountryType";
 
 const countries = ["Switzerland", "Pakistan"];
 
 const Registrate = () => {
   const [country, setCountry] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const getCountries = () => {
     return CountryService.getCountries()
       .then((res) => setCountry(res.data))
       .catch((err) => console.log(err, "failed"));
   };
+
+  const getCities = () => {
+    return LocationService.getCities()
+      .then((res) => setCities(res.data))
+      .catch((err) => console.log(err, "failed"));
+  };
+
+  console.log(country, "country got it?");
+  console.log(cities, "cities?");
 
   const createUser = (values: RegistrationType) => {
     return CustomerService.createCustomer(values);
@@ -48,24 +61,24 @@ const Registrate = () => {
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}S$/;
 
   const validationSchema = yup.object().shape({
-    customer_surname: yup.string().required("Surname is a Required field"),
-    customer_lastname: yup.string().required("Required is a Required field"),
+    customer_surname: yup.string().required("Firstname is a Required field"),
+    customer_lastname: yup.string().required("Lastname is a Required field"),
     customer_email: yup.string().email("Email is invalid").required("Required"),
     customer_address: yup.string().required("Address is a Required field."),
-    postal_code: yup.string().required("Required field"),
+    postal_code: yup.string().required("Postal Code is a Required field"),
     country_name: yup.string().required("Please choose a country"),
     customer_password: yup.string().min(8).required("Please set a password"),
   });
 
-  const handleSubmit = (values: RegistrationType): void => {
+  useEffect(() => {
+    getCountries().then(getCities);
+  }, []);
+
+  const handleSubmit = (values: RegistrationType) => {
     createUser(values);
+    console.log(createUser(values), "created user");
     alert(JSON.stringify(values));
   };
-
-  useEffect(() => {
-    getCountries();
-    console.log(country, "HeY");
-  }, []);
 
   return (
     <>
@@ -73,7 +86,9 @@ const Registrate = () => {
       <div className="registrationForm">
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={(values: RegistrationType) => {
+            handleSubmit(values);
+          }}
           validationSchema={validationSchema}
         >
           {(props: FormikProps<RegistrationType>) => {
@@ -94,7 +109,7 @@ const Registrate = () => {
                       fullWidth
                       name="customer_surname"
                       id="customer_surname"
-                      label="Surname"
+                      label="Firstname"
                       variant="outlined"
                       value={values.customer_surname}
                       type="text"
@@ -162,25 +177,23 @@ const Registrate = () => {
                     />
                   </Grid>
                   <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
-                    <TextField
-                      fullWidth
-                      name="postal_code"
-                      id="postal_code"
-                      label="Postal Code"
-                      variant="outlined"
-                      value={values.postal_code}
-                      type="text"
-                      helperText={
-                        errors.postal_code && touched.postal_code
-                          ? errors.postal_code
-                          : null
+                    <Autocomplete
+                      id="location"
+                      options={cities}
+                      getOptionLabel={(option: CityType) =>
+                        option.postalCode + " " + option.locationName
                       }
-                      error={
-                        errors.postal_code && touched.postal_code ? true : false
-                      }
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Location"
+                          variant="outlined"
+                          value={values.postal_code}
+                          required
+                          onChange={handleChange}
+                          
+                        />
+                      )}
                     />
                   </Grid>
                   <Grid
@@ -193,13 +206,16 @@ const Registrate = () => {
                   >
                     <Autocomplete
                       id="country_name"
-                      options={countries}
+                      options={country}
+                      getOptionLabel={(option: CountryType) =>
+                        option.countryName
+                      }
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           label="Country"
                           variant="outlined"
-                          value={"Switzerland"}
+                          value={values.country_name}
                           required
                           helperText={
                             errors.country_name && touched.country_name
@@ -211,7 +227,6 @@ const Registrate = () => {
                               ? true
                               : false
                           }
-                          disabled
                           onChange={handleChange}
                           onBlur={handleBlur}
                         />

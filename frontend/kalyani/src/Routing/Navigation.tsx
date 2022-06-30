@@ -14,8 +14,8 @@ export default function Navigate() {
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Homepage />} />
-        <Route path={"/clothes"} element={<MultiItemPage />} />
-        <Route path={"/clothes/:id"} element={<SingleItemPage />} />
+        <Route path={"/clothes/:type"} element={<MultiItemPage />} />
+        <Route path={"/clothes/:type/:id"} element={<SingleItemPage />} />
         <Route path={"/checkout"} element={<Checkout />} />
         <Route path={"/order"} element={<Order />} />
         <Route path={"/registrate"} element={<Registrate />} />
