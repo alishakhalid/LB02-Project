@@ -1,38 +1,43 @@
-import { CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  CardContent,
+  CardMedia,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { clothingProps } from "../../Props/Clothing";
 import TextButton from "../atoms/Button";
 import { Link } from "react-router-dom";
 
 export const Clothes = ({
-  id,
-  clothing_description,
-  clothing_image,
-  clothing_name,
-  clothing_price,
-  clothing_type,
+  clothingId,
+  clothingDescription,
+  clothingImage,
+  clothingName,
+  clothingPrice,
+  clothingType,
 }: clothingProps) => {
   return (
     <Card>
       <div className="card">
         <CardMedia
           component="img"
-          image={clothing_image}
+          image={clothingImage}
           alt="Clothing piece"
           height="250"
         />
         <CardContent className="card-body">
           <Typography variant="h4" className="cardTitle">
-            {clothing_name}{" "}
+            {clothingName}{" "}
           </Typography>
           <Typography className="card-text" variant="body2" color="secondary">
-            {clothing_description}
+            {clothingDescription}
           </Typography>
-          <Typography>Price CHF: {clothing_price}</Typography>
-          <Typography>Clothing Category: {clothing_type}</Typography>
+          <Typography>Price CHF: {clothingPrice}</Typography>
+          {/* <Typography>Clothing Category: {clothingType}</Typography> */}
         </CardContent>
-        <Link to={"/clothes/" + id}>
+        <Link to={"/clothes/category/" + clothingId}>
           <TextButton text="View" color="primary" />
         </Link>
       </div>

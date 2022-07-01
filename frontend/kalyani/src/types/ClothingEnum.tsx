@@ -1,4 +1,4 @@
-type ClothingEnumType = {
+export type ClothingEnumType = {
   [type: string]: string;
 };
 
