@@ -2,6 +2,7 @@ package com.tbz.webshop.domain.country;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "country")
 @Getter
+@Setter
 @NoArgsConstructor
 public class Country {
 

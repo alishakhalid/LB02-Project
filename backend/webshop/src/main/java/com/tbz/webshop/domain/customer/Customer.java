@@ -1,17 +1,21 @@
 package com.tbz.webshop.domain.customer;
 
-import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.country.Country;
 import com.tbz.webshop.domain.location.Location;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.UUID;
+import javax.validation.constraints.Email;
+import java.util.*;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -22,7 +26,8 @@ import static javax.persistence.FetchType.EAGER;
         @Index(columnList = "customer_email"),
         @Index(columnList = "customer_password")})
 @NoArgsConstructor
-public class Customer {
+@AllArgsConstructor
+public class Customer  {
 
     @Id
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -36,6 +41,7 @@ public class Customer {
     @Column(nullable = false, name = "customer_lastname")
     private String customerLastname;
 
+    @Email
     @Column(nullable = false, name = "customer_email")
     private String customerEmail;
 
@@ -45,20 +51,23 @@ public class Customer {
     @Column(nullable = false, name = "customer_password")
     private String password;
 
-    @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
-    @JoinColumn(name = "id_country", nullable = false, referencedColumnName = "country_id")
+    @ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
+    @JoinColumn(name = "id_country", nullable = true, referencedColumnName = "country_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
 
-    @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
-    @JoinColumn(name = "id_location", nullable = false, referencedColumnName = "location_id")
+    @ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
+    @JoinColumn(name = "id_location", nullable = true, referencedColumnName = "location_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "id_cart", nullable = true, referencedColumnName = "cart_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Cart cart;
-
-
+    public Customer(String customerSurname, String customerLastname, String customerEmail, String customerAddress, String password, Country country, Location location) {
+        this.customerSurname = customerSurname;
+        this.customerLastname = customerLastname;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+        this.password = password;
+        this.country = country;
+        this.location = location;
+    }
 }

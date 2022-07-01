@@ -48,6 +48,16 @@ public class ClothingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @GetMapping("/type/{type}")
+    public ResponseEntity findClothingByClothingType(@PathVariable String type){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(clothingService.findClothingByClothingType(type));
+        } catch (InstanceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
     /**
      * This is the Endpoint that is responsible for deleting a clothing item from the database
@@ -65,6 +75,15 @@ public class ClothingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/clothingTypes")
+    public ResponseEntity findAllClothingTypes(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(clothingService.findAllClothingTypes());
+        }catch (NullPointerException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 

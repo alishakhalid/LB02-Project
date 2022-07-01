@@ -1,6 +1,7 @@
 package com.tbz.webshop.domain.customer;
 
 import com.tbz.webshop.domain.cart.Cart;
+import com.tbz.webshop.domain.clothingType.ClothingType;
 import com.tbz.webshop.domain.country.Country;
 import com.tbz.webshop.domain.location.Location;
 
@@ -16,13 +17,13 @@ public interface CustomerService {
 
     Cart findCartByCustomerId(UUID customerId) throws InstanceNotFoundException;
 
-    Customer registerUser(Customer customer) throws InstanceAlreadyExistsException, NullPointerException;
-
     Cart createCartByCustomerId(Cart cart, UUID customerId) throws InstanceAlreadyExistsException, NullPointerException;
 
     List<Location> findAllLocation() throws NullPointerException, InstanceNotFoundException;
 
     List<Country> findAllCountries() throws NullPointerException, InstanceNotFoundException;
 
-    //Customer existsByCredentials(String username, String password) throws NoSuchElementException;
+    List<Customer> findAllCustomers() throws NullPointerException, InstanceNotFoundException;
+
+    Customer saveCustomer(CustomerDTO customerDTO) throws InstanceAlreadyExistsException;
 }

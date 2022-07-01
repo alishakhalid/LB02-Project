@@ -4,6 +4,8 @@ package com.tbz.webshop.domain.clothing;
 import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.clothingSize.ClothingSize;
 import com.tbz.webshop.domain.clothingSize.ClothingSizeRepository;
+import com.tbz.webshop.domain.clothingType.ClothingType;
+import com.tbz.webshop.domain.clothingType.ClothingTypeRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class ClothingServiceImpl implements ClothingService{
     private ClothingRepository clothingRepository;
     @Autowired
     private ClothingSizeRepository clothingSizeRepository;
+    @Autowired
+    private ClothingTypeRepository clothingTypeRepository;
 
 
     /**
@@ -79,6 +83,15 @@ public class ClothingServiceImpl implements ClothingService{
     }
 
     @Override
+    public List<ClothingType> findAllClothingTypes() throws NullPointerException {
+        List<ClothingType> clothingTypeList = clothingTypeRepository.findAll();
+        if(!(clothingTypeList.isEmpty() || clothingTypeList == null)){
+            return clothingTypeList;
+        } else
+            throw new NullPointerException("Clothing Size List is empty");
+    }
+
+    @Override
     public List<ClothingSize> findAllClothingSizes() throws NullPointerException {
         List<ClothingSize> clothingSizeList = this.clothingSizeRepository.findAll();
 
@@ -86,5 +99,15 @@ public class ClothingServiceImpl implements ClothingService{
             return clothingSizeList;
         } else
             throw new NullPointerException("Clothing Size List is empty");
+    }
+
+    @Override
+    public List<Clothing> findClothingByClothingType(String clothingType) throws NullPointerException, InstanceNotFoundException {
+        List<Clothing> clothingList = this.clothingRepository.findClothingByClothingType(clothingType);
+
+        if(!(clothingList.isEmpty() || clothingList == null)){
+            return clothingList;
+        } else
+            throw new NullPointerException("Clothing List is empty");
     }
 }

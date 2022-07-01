@@ -2,6 +2,7 @@ package com.tbz.webshop.domain.clothing;
 
 import com.tbz.webshop.domain.cart.Cart;
 import com.tbz.webshop.domain.clothingSize.ClothingSize;
+import com.tbz.webshop.domain.clothingType.ClothingType;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
@@ -14,5 +15,6 @@ public interface ClothingService {
     void deleteClothingFromCart(UUID id) throws InstanceNotFoundException;
     Cart addClothingToCart(Cart cart) throws InstanceAlreadyExistsException, NullPointerException;
     List<ClothingSize> findAllClothingSizes() throws NullPointerException;
-
+    List<Clothing> findClothingByClothingType(String clothingType) throws InstanceNotFoundException,NullPointerException;
+    List<ClothingType> findAllClothingTypes() throws NullPointerException;
 }
