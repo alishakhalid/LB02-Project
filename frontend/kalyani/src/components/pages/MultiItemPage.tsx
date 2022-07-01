@@ -7,18 +7,25 @@ import { clothingProps } from "../../Props/Clothing";
 import Clothes from "./Clothes";
 import { Box, Container } from "@mui/material";
 import Paper from "@mui/material/Paper";
+import ClothingService from "../../services/ClothingService";
+import clothingType from "../../types/ClothingEnum";
+import { ClothingEnumType } from "../../types/ClothingEnum";
 
 function AllClothesPage() {
   const [clothes, setClothes] = useState<clothingProps[]>([]);
+  const [clothingtype, setClothingType] = useState<ClothingEnumType>();
   const [isLoading, setisLoading] = useState<boolean>(true);
   const { search } = useContext(SearchContext);
 
-  // useEffect(() => {
-  //   getAllClothes().then((resolve) => {
-  //     setClothes(resolve.data);
-  //     setisLoading(false);
-  //   });
-  // }, []);
+  useEffect(() => {
+    ClothingService.getAllClothes().then((resolve) => {
+      setClothes(resolve.data);
+      setisLoading(false);
+    });
+    ClothingService.getClothingTypes().then((res) => {
+      setClothingType(res.data);
+    });
+  }, []);
 
   const clothingPiece = [
     {
@@ -72,23 +79,23 @@ function AllClothesPage() {
         <Container>
           <Grid sx={{ flexGrow: 1 }} container spacing={2}>
             <Grid item xs={12} style={{ marginTop: "2%" }}>
-              {/* {isLoading && <h1>Page is loading...</h1>} */}
+              {isLoading && <h1>Page is loading...</h1>}
               <Grid container justifyContent="center" spacing={2}>
-                {clothingPiece
-                  .filter((product) => {
+                {clothes
+                  .filter((clothing) => {
                     return (
-                      product.clothing_name.toLowerCase().includes(search) ||
+                      clothing.clothingName.toLowerCase().includes(search) ||
                       !search
                     );
                   })
-                  .map((product: clothingProps) => {
+                  .map((clothing: clothingProps) => {
                     return (
                       <Grid item>
                         <Clothes
-                          clothing_image={product.clothing_image}
-                          clothing_name={product.clothing_name}
-                          clothing_price={product.clothing_price}
-                          clothing_type={product.clothing_type}
+                          clothingImage={clothing.clothingImage}
+                          clothingName={clothing.clothingName}
+                          clothingPrice={clothing.clothingPrice}
+                          clothingType={clothingType}
                         />
                       </Grid>
                     );

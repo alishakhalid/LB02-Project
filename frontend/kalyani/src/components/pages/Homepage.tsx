@@ -6,7 +6,6 @@ import Footer from "../organisms/Footer";
 import { itemData } from "../molecules/HomepageData";
 import { IconButton, ImageListItemBar } from "@mui/material";
 import TextButton from "../atoms/Button";
-import "../../styling/HomePage.css";
 import { Link } from "react-router-dom";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
@@ -45,7 +44,7 @@ export default function QuiltedImageList() {
               title={item.title}
               position="top"
               actionIcon={
-                <Link to="/clothes">
+                <Link to="/clothes/:catefory">
                   <TextButton text="VIEW" color="primary" />
                 </Link>
               }

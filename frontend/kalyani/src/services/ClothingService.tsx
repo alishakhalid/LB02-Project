@@ -1,13 +1,21 @@
-import axios from "axios";
+import api from "./ApiService";
 
-const API = axios.create({
-  baseURL: "http://localhost:8080/clothing",
-});
+const ClothingService = {
+  getAllClothes: () => {
+    return api.get("/clothing");
+  },
 
-export const getClothingById = (id: string) => {
-  return API.get("/" + id);
+  getClothingById: (id: string) => {
+    return api.get("/clothing/" + id);
+  },
+
+  getAllClothingSize: () => {
+    return api.get("/clothing/clothingSizes");
+  },
+
+  getClothingTypes: () => {
+    return api.get("/clothing/clothingTypes");
+  },
 };
 
-export const getAllClothes = () => {
-  return API.get("/");
-};
+export default ClothingService;

@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import { alpha } from "@mui/material/styles";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -15,13 +14,29 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TextButton from "../atoms/Button";
 import "../../styling/SingleItem.css";
+import { useEffect, useState } from "react";
+import ClothingService from "../../services/ClothingService";
+import { v4 as uuid } from "uuid";
 
 const size = ["S", "M", "L"];
 
+const userid = uuid();
+
 export default function SingleProductPage() {
+  const { id } = useParams<{ id: typeof userid }>();
+  const [clothing, setClothing] = useState<clothingProps>({} as clothingProps);
+
+  useEffect(() => {
+    if (id !== undefined) {
+      ClothingService.getClothingById(id).then((res) => {
+        setClothing(res.data);
+      });
+    }
+  }, [id]);
+
   return (
     <>
       <Header />
@@ -48,7 +63,7 @@ export default function SingleProductPage() {
             position: "left",
           }}
           alt="Iqra Aziz"
-          src="https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg"
+          src={clothing.clothingImage}
         />
         <Box
           sx={{
@@ -63,11 +78,11 @@ export default function SingleProductPage() {
             <div className="Singlecard"></div>
             <Grid item xs={12} direction="column">
               <Grid item>
-                <Typography variant="h4">Kameez</Typography>
+                <Typography variant="h4">{clothing.clothingName}</Typography>
               </Grid>
               <Grid item>
                 <Typography variant="caption" className="description">
-                  CHF 30.20
+                  {clothing.clothingPrice}
                 </Typography>
               </Grid>
               <Grid item>
@@ -105,7 +120,7 @@ export default function SingleProductPage() {
               <Grid item direction="column">
                 <Typography variant="h4">Description</Typography>
                 <Typography variant="caption" className="description">
-                  Lambi Kameez
+                  {clothing.clothingDescription}
                 </Typography>
               </Grid>
             </Grid>
