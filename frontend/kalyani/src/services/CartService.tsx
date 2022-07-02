@@ -1,3 +1,4 @@
+import { RegistrationType } from "../types/RegistrationType";
 import api from "./ApiService";
 
 const CartService = {
@@ -5,12 +6,16 @@ const CartService = {
     return api.delete("/clothing/" + id);
   },
 
-  getClothingById: () => {
-    return api.post("/clothing/cart");
+  getCartById: async (user: RegistrationType): Promise<RegistrationType> => {
+    const { data } = await api.post("/customer/signup", user);
+    return data;
   },
 
-  createCartByCustomerId: (id: string) => {
-    return api.post("/clothing/cart/" + id);
+  createCartByCustomerId: async (
+    user: RegistrationType
+  ): Promise<RegistrationType> => {
+    const { data } = await api.post("/customer/signup", user);
+    return data;
   },
 
   findCartByCustomerId: (id: string) => {
