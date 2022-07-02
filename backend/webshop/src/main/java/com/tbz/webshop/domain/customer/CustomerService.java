@@ -19,9 +19,9 @@ public interface CustomerService {
 
     Cart createCartByCustomerId(Cart cart, UUID customerId) throws InstanceAlreadyExistsException, NullPointerException;
 
-    List<Location> findAllLocation() throws NullPointerException, InstanceNotFoundException;
+    List<String> findAllLocation() throws NullPointerException, InstanceNotFoundException;
 
-    List<Country> findAllCountries() throws NullPointerException, InstanceNotFoundException;
+    List<String> findAllCountries() throws NullPointerException, InstanceNotFoundException;
 
     List<Customer> findAllCustomers() throws NullPointerException, InstanceNotFoundException;
 

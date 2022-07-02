@@ -86,8 +86,8 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     }
 
     @Override
-    public List<Location> findAllLocation() throws NullPointerException {
-        List<Location> locationList = locationRepository.findAll();
+    public List<String> findAllLocation() throws NullPointerException {
+        List<String> locationList = locationRepository.findAllLocationName();
 
         if (!(locationList.isEmpty() || locationList == null)) {
             return locationList;
@@ -96,8 +96,8 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     }
 
     @Override
-    public List<Country> findAllCountries() throws NullPointerException {
-        List<Country> countryList = countryRepository.findAll();
+    public List<String> findAllCountries() throws NullPointerException {
+        List<String> countryList = countryRepository.findAllcountryName();
 
         if (!(countryList.isEmpty() || countryList == null)) {
             return countryList;
