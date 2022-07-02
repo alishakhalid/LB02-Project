@@ -38,8 +38,7 @@ public class Clothing {
     private String clothingDescription;
 
     @Column(nullable = true, name = "clothing_image")
-    @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] clothingImage;
+    private String clothingImage;
 
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
     @JoinColumn(name = "id_clothing_size", nullable = false, referencedColumnName = "clothing_size_id")

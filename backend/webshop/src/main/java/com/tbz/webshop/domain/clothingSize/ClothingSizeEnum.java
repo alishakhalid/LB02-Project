@@ -1,5 +1,5 @@
 package com.tbz.webshop.domain.clothingSize;
 
 public enum ClothingSizeEnum {
-    M, S, XL;
+    M, S, XL, L, XS;
 }
