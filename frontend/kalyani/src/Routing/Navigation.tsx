@@ -8,6 +8,7 @@ import SingleItemPage from "../components/pages/SingleItemPage";
 import Order from "../components/pages/Order";
 import App from "../App";
 import SearchProvider from "../context/SearchContext";
+import AboutUs from "../components/pages/AboutUs";
 
 export default function Navigate() {
   return (
@@ -20,6 +21,7 @@ export default function Navigate() {
         <Route path={"/order"} element={<Order />} />
         <Route path={"/registrate"} element={<Registrate />} />
         <Route path={"/login"} element={<Login />} />
+        <Route path={"/aboutus"} element={<AboutUs />} />
       </Routes>
     </BrowserRouter>
   );

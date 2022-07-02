@@ -15,49 +15,22 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Sidebar from "./Sidebar";
 import "../../styling/Header.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Search from "../pages/Search";
-import SearchProvider from "../../context/SearchContext";
+import { SearchContext } from "../../context/SearchContext";
 
-const SearchStyle = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
-export default function PrimarySearchAppBar() {
+export default function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
   const [isLogged, setisLogged] = useState<boolean>(false);
+  const [serach, setSearch] = useState("");
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const { addSearch } = useContext(SearchContext);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -74,6 +47,10 @@ export default function PrimarySearchAppBar() {
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleClickLogin = () => {
+    setisLogged(!isLogged);
   };
 
   const menuId = "primary-search-account-menu";
@@ -120,6 +97,7 @@ export default function PrimarySearchAppBar() {
         <IconButton
           size="large"
           color="inherit"
+          style={{ backgroundColor: "#b2dfdb" }}
           onClick={() => navigate("/checkout")}
         >
           <Badge badgeContent={4} color="error">
@@ -128,26 +106,19 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Cart</p>
       </MenuItem>
-      <MenuItem
-        onClick={() => {
-          if (isLogged) {
-            navigate("/login");
-          } else {
-            navigate("/");
-          }
-        }}
-      >
+      <MenuItem onClick={handleClickLogin}>
         <IconButton
           size="large"
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
           color="inherit"
+          style={{ backgroundColor: "#b2dfdb" }}
+          onClick={() => navigate("/login")}
         >
           <AccountCircle />
         </IconButton>
-        {/* if logged in ? Logout : Login - display text */}
-        <p>Logout</p>
+        {isLogged ? <p>Logout</p> : <p>Login</p>}
       </MenuItem>
     </Menu>
   );
@@ -166,12 +137,7 @@ export default function PrimarySearchAppBar() {
             KALYANI
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <SearchStyle>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </SearchStyle>
+
           <Box
             sx={{
               display: { xs: "none", md: "flex" },

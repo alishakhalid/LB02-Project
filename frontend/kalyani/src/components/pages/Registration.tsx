@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Grid,
   TextField,
-  Button,
   makeStyles,
   createStyles,
   Theme,
@@ -21,8 +20,7 @@ import ApiService from "../../services/ApiService";
 import LocationService from "../../services/LocationService";
 import { CityType } from "../../types/CityType";
 import { CountryType } from "../../types/CountryType";
-
-const countries = ["Switzerland", "Pakistan"];
+import Button from "@mui/material/Button";
 
 const Registrate = () => {
   const [country, setCountry] = useState([]);
@@ -48,26 +46,26 @@ const Registrate = () => {
   };
 
   const initialValues: RegistrationType = {
-    customer_surname: "",
-    customer_lastname: "",
-    customer_email: "",
-    customer_address: "",
-    postal_code: "",
-    country_name: "",
-    customer_password: "",
+    customerSurname: "",
+    customerLastname: "",
+    customerEmail: "",
+    customerAddress: "",
+    location: "",
+    country: "",
+    password: "",
   };
 
   const passwordMatch =
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}S$/;
 
   const validationSchema = yup.object().shape({
-    customer_surname: yup.string().required("Firstname is a Required field"),
-    customer_lastname: yup.string().required("Lastname is a Required field"),
-    customer_email: yup.string().email("Email is invalid").required("Required"),
-    customer_address: yup.string().required("Address is a Required field."),
-    postal_code: yup.string().required("Postal Code is a Required field"),
-    country_name: yup.string().required("Please choose a country"),
-    customer_password: yup.string().min(8).required("Please set a password"),
+    customerSurname: yup.string().required("Firstname is a Required field"),
+    customerLastname: yup.string().required("Lastname is a Required field"),
+    customerEmail: yup.string().email("Email is invalid").required("Required"),
+    customerAddress: yup.string().required("Address is a Required field."),
+    location: yup.string().required("Postal Code is a Required field"),
+    country: yup.string().required("Please choose a country"),
+    password: yup.string().min(8).required("Please set a password"),
   });
 
   useEffect(() => {
@@ -75,6 +73,7 @@ const Registrate = () => {
   }, []);
 
   const handleSubmit = (values: RegistrationType) => {
+    console.log("HEY TEST");
     createUser(values);
     console.log(createUser(values), "created user");
     alert(JSON.stringify(values));
@@ -86,9 +85,7 @@ const Registrate = () => {
       <div className="registrationForm">
         <Formik
           initialValues={initialValues}
-          onSubmit={(values: RegistrationType) => {
-            handleSubmit(values);
-          }}
+          onSubmit={() => {}}
           validationSchema={validationSchema}
         >
           {(props: FormikProps<RegistrationType>) => {
@@ -107,19 +104,19 @@ const Registrate = () => {
                   <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
                     <TextField
                       fullWidth
-                      name="customer_surname"
-                      id="customer_surname"
+                      name="customerSurname"
+                      id="customerSurname"
                       label="Firstname"
                       variant="outlined"
-                      value={values.customer_surname}
+                      value={values.customerSurname}
                       type="text"
                       helperText={
-                        errors.customer_surname && touched.customer_surname
-                          ? errors.customer_surname
+                        errors.customerSurname && touched.customerSurname
+                          ? errors.customerSurname
                           : null
                       }
                       error={
-                        errors.customer_surname && touched.customer_surname
+                        errors.customerSurname && touched.customerSurname
                           ? true
                           : false
                       }
@@ -131,19 +128,19 @@ const Registrate = () => {
                   <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
                     <TextField
                       fullWidth
-                      name="customer_lastname"
-                      id="customer_lastname"
+                      name="customerLastname"
+                      id="customerLastname"
                       label="Lastname"
                       variant="outlined"
-                      value={values.customer_lastname}
+                      value={values.customerLastname}
                       type="text"
                       helperText={
-                        errors.customer_lastname && touched.customer_lastname
-                          ? errors.customer_lastname
+                        errors.customerLastname && touched.customerLastname
+                          ? errors.customerLastname
                           : null
                       }
                       error={
-                        errors.customer_lastname && touched.customer_lastname
+                        errors.customerLastname && touched.customerLastname
                           ? true
                           : false
                       }
@@ -155,19 +152,19 @@ const Registrate = () => {
                   <Grid item lg={5} md={5} sm={5} xs={5} className="textfield">
                     <TextField
                       fullWidth
-                      name="customer_address"
-                      id="customer_address"
+                      name="customerAddress"
+                      id="customerAddress"
                       label="Address"
                       variant="outlined"
-                      value={values.customer_address}
+                      value={values.customerAddress}
                       type="text"
                       helperText={
-                        errors.customer_address && touched.customer_address
-                          ? errors.customer_address
+                        errors.customerAddress && touched.customerAddress
+                          ? errors.customerAddress
                           : null
                       }
                       error={
-                        errors.customer_address && touched.customer_address
+                        errors.customerAddress && touched.customerAddress
                           ? true
                           : false
                       }
@@ -180,18 +177,14 @@ const Registrate = () => {
                     <Autocomplete
                       id="location"
                       options={cities}
-                      getOptionLabel={(option: CityType) =>
-                        option.postalCode + " " + option.locationName
-                      }
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           label="Location"
                           variant="outlined"
-                          value={values.postal_code}
+                          value={values.location}
                           required
                           onChange={handleChange}
-                          
                         />
                       )}
                     />
@@ -205,27 +198,22 @@ const Registrate = () => {
                     className="textfield"
                   >
                     <Autocomplete
-                      id="country_name"
+                      id="country"
                       options={country}
-                      getOptionLabel={(option: CountryType) =>
-                        option.countryName
-                      }
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           label="Country"
                           variant="outlined"
-                          value={values.country_name}
+                          value={values.country}
                           required
                           helperText={
-                            errors.country_name && touched.country_name
-                              ? errors.country_name
+                            errors.country && touched.country
+                              ? errors.country
                               : null
                           }
                           error={
-                            errors.country_name && touched.country_name
-                              ? true
-                              : false
+                            errors.country && touched.country ? true : false
                           }
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -243,19 +231,19 @@ const Registrate = () => {
                   >
                     <TextField
                       fullWidth
-                      name="customer_email"
-                      id="customer_email"
+                      name="customerEmail"
+                      id="customerEmail"
                       label="Email"
                       variant="outlined"
-                      value={values.customer_email}
+                      value={values.customerEmail}
                       type="email"
                       helperText={
-                        errors.customer_email && touched.customer_email
-                          ? errors.customer_email
+                        errors.customerEmail && touched.customerEmail
+                          ? errors.customerEmail
                           : null
                       }
                       error={
-                        errors.customer_email && touched.customer_email
+                        errors.customerEmail && touched.customerEmail
                           ? true
                           : false
                       }
@@ -275,22 +263,18 @@ const Registrate = () => {
                   >
                     <TextField
                       fullWidth
-                      name="customer_password"
-                      id="customer_password"
+                      name="password"
+                      id="password"
                       label="Password"
                       variant="outlined"
-                      value={values.customer_password}
+                      value={values.password}
                       type="password"
                       helperText={
-                        errors.customer_password && touched.customer_password
-                          ? errors.customer_password
+                        errors.password && touched.password
+                          ? errors.password
                           : "One uppercase, one lowercase, one special character and no spaces"
                       }
-                      error={
-                        errors.customer_password && touched.customer_password
-                          ? true
-                          : false
-                      }
+                      error={errors.password && touched.password ? true : false}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       required
@@ -305,13 +289,14 @@ const Registrate = () => {
                     xs={11}
                     className="submitButton"
                   >
-                    <TextButton
-                      disabled={isSubmitting}
+                    <Button
                       color="primary"
-                      text="Create"
+                      type="submit"
+                      variant="contained"
+                      onClick={() => handleSubmit(values)}
                     >
                       Submit
-                    </TextButton>
+                    </Button>
                   </Grid>
                 </Grid>
               </Form>

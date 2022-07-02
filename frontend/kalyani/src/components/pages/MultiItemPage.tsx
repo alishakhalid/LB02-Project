@@ -1,21 +1,51 @@
 import Header from "../molecules/Header";
 import Footer from "../organisms/Footer";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import { SearchContext } from "../../context/SearchContext";
 import { clothingProps } from "../../Props/Clothing";
 import Clothes from "./Clothes";
-import { Box, Container } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import { Container } from "@mui/material";
 import ClothingService from "../../services/ClothingService";
 import clothingType from "../../types/ClothingEnum";
 import { ClothingEnumType } from "../../types/ClothingEnum";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+
+const SearchStyle = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 
 function AllClothesPage() {
   const [clothes, setClothes] = useState<clothingProps[]>([]);
   const [clothingtype, setClothingType] = useState<ClothingEnumType>();
   const [isLoading, setisLoading] = useState<boolean>(true);
-  const { search } = useContext(SearchContext);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     ClothingService.getAllClothes().then((resolve) => {
@@ -27,51 +57,6 @@ function AllClothesPage() {
     });
   }, []);
 
-  const clothingPiece = [
-    {
-      clothing_image:
-        "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
-      clothing_name: "Kameez",
-      clothing_price: 30,
-      clothing_type: "FORMAL",
-    },
-    {
-      clothing_image:
-        "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
-      clothing_name: "Kameez",
-      clothing_price: 30,
-      clothing_type: "FORMAL",
-    },
-    {
-      clothing_image:
-        "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
-      clothing_name: "Kameez",
-      clothing_price: 30,
-      clothing_type: "FORMAL",
-    },
-    {
-      clothing_image:
-        "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
-      clothing_name: "Kameez",
-      clothing_price: 30,
-      clothing_type: "FORMAL",
-    },
-    {
-      clothing_image:
-        "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
-      clothing_name: "Kameez",
-      clothing_price: 30,
-      clothing_type: "FORMAL",
-    },
-    {
-      clothing_image:
-        "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
-      clothing_name: "Kameez",
-      clothing_price: 30,
-      clothing_type: "FORMAL",
-    },
-  ];
-
   return (
     <>
       <div className="allProducts">
@@ -80,13 +65,26 @@ function AllClothesPage() {
           <Grid sx={{ flexGrow: 1 }} container spacing={2}>
             <Grid item xs={12} style={{ marginTop: "2%" }}>
               {isLoading && <h1>Page is loading...</h1>}
+              <SearchStyle>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => setSearch(e.target.value)}
+                  type="text"
+                />
+              </SearchStyle>
               <Grid container justifyContent="center" spacing={2}>
                 {clothes
                   .filter((clothing) => {
-                    return (
-                      clothing.clothingName.toLowerCase().includes(search) ||
-                      !search
-                    );
+                    if (search === "") {
+                      return clothing;
+                    } else if (
+                      clothing.clothingName
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return clothing;
+                    }
                   })
                   .map((clothing: clothingProps) => {
                     return (
