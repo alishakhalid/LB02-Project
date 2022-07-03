@@ -48,7 +48,7 @@ public class CustomerController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody CustomerLogin customerLogin) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(customerLogin.getEmail(), customerLogin.getPassword()));
+                new UsernamePasswordAuthenticationToken(customerLogin.getCustomerEmail(), customerLogin.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);

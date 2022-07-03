@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class CustomerLogin {
     @NotBlank
-    private String email;
+    private String customerEmail;
 
     @NotBlank
     private String password;
