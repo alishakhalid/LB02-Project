@@ -92,8 +92,8 @@ public class ClothingServiceImpl implements ClothingService{
     }
 
     @Override
-    public List<ClothingSize> findAllClothingSizes() throws NullPointerException {
-        List<ClothingSize> clothingSizeList = this.clothingSizeRepository.findAll();
+    public List<String> findAllClothingSizes() throws NullPointerException {
+        List<String> clothingSizeList = this.clothingSizeRepository.findAllClothingSize();
 
         if(!(clothingSizeList.isEmpty() || clothingSizeList == null)){
             return clothingSizeList;
