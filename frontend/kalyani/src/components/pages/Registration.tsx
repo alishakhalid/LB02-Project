@@ -73,10 +73,8 @@ const Registrate = () => {
   }, []);
 
   const handleSubmit = (values: RegistrationType) => {
-    console.log("HEY TEST");
     createUser(values);
-    console.log(createUser(values), "created user");
-    alert(JSON.stringify(values));
+    //alert(JSON.stringify(values));
   };
 
   return (
@@ -89,14 +87,7 @@ const Registrate = () => {
           validationSchema={validationSchema}
         >
           {(props: FormikProps<RegistrationType>) => {
-            const {
-              values,
-              touched,
-              errors,
-              handleBlur,
-              handleChange,
-              isSubmitting,
-            } = props;
+            const { values, touched, errors, handleBlur, handleChange } = props;
             return (
               <Form>
                 <h1 className="title">CREATE ACCOUNT</h1>

@@ -1,10 +1,8 @@
 import { ClothingEnumType } from "../types/ClothingEnum";
-import { v4 as uuid } from "uuid";
-import { TypeOf } from "yup";
-const id = uuid();
+
 
 export type clothingProps = {
-  clothingId?: typeof id;
+  clothingId?: string;
   clothingDescription?: string;
   clothingImage: string;
   clothingName: string;

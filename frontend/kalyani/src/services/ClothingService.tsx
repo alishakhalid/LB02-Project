@@ -5,8 +5,8 @@ const ClothingService = {
     return api.get("/clothing");
   },
 
-  getClothingById: (id: string) => {
-    return api.get("/clothing/" + id);
+  getClothingById: (clothingId: string) => {
+    return api.get(`/clothing/${clothingId}`);
   },
 
   getAllClothingSize: () => {

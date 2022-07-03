@@ -1,0 +1,13 @@
+body {
+    background-color: #e8e8e8;
+}
+
+.text {
+    text-align: left;
+    margin-left: 2px;
+    padding-left: 2vh;
+}
+
+.payButton {
+    width: 70%;
+}

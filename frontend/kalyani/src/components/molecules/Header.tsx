@@ -71,7 +71,7 @@ export default function Header() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link to="/login">{isLogged ? <p>Logout</p> : <p>Login</p>}</Link>
+        <Link to="/login"></Link>
       </MenuItem>
     </Menu>
   );
@@ -114,7 +114,7 @@ export default function Header() {
           aria-haspopup="true"
           color="inherit"
           style={{ backgroundColor: "#b2dfdb" }}
-          onClick={() => navigate("/login")}
+          onClick={() => (isLogged ? navigate("/") : navigate("/login"))}
         >
           <AccountCircle />
         </IconButton>

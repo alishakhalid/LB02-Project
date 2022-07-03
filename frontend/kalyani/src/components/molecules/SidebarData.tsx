@@ -18,11 +18,11 @@ export const SidebarData: SidebarType[] = [
     subnav: [
       {
         title: "Stitched",
-        path: "/clothes/formal-wear-stitched/1",
+        path: "/clothes/formal-wear/eee3dac1-8301-4093-ab01-0f191c745db2",
       },
       {
         title: "Unstitched",
-        path: "/clothes/formal-wear-unstitched/1",
+        path: "/clothes/formal-wear/eee3dac1-8301-4093-ab01-0f191c745db2",
       },
     ],
   },
@@ -34,11 +34,11 @@ export const SidebarData: SidebarType[] = [
     subnav: [
       {
         title: "Stitched",
-        path: "/clothes/casual-wear-stitched/1",
+        path: "/clothes/casual-wear/eee3dac1-8301-4093-ab01-0f191c745db2",
       },
       {
         title: "Unstitched",
-        path: "/clothes/casual-wear-unstitched/1",
+        path: "/clothes/casual-wear/eee3dac1-8301-4093-ab01-0f191c745db2",
       },
     ],
   },

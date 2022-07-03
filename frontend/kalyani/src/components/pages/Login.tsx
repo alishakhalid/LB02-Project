@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState, useContext } from "react";
 import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
 import { Formik, Form, FormikProps } from "formik";
 import * as yup from "yup";
@@ -10,17 +10,58 @@ import TextButton from "../atoms/Button";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import theme from "../../config/Theme";
+import AuthService from "../../services/Auth-Service";
+import api from "../../services/ApiService";
+import * as H from "history";
+import Context from "../../context/SnackbarContext";
 
-const Registrate = () => {
+export interface RouteComponentProps {
+  history?: H.History;
+}
+
+const Login: FC<RouteComponentProps> = ({ history }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
+  const { displaySnackbarMessage } = useContext(Context);
 
   const initialValues: LoginType = {
-    email: "",
+    customerEmail: "",
     password: "",
   };
 
+  const login = (data: any) => {
+    let params = {
+      customerEmail: data.customerEmail,
+      password: data.password,
+    };
+    api
+      .post("/customer/signin", params)
+      .then((response) => {
+        console.log("success");
+        displaySnackbarMessage("Logged in successfully!", "success");
+        localStorage.setItem("auth", response.data.token);
+        setTimeout(() => {
+          if (history !== undefined) {
+            console.log(history, "history yaar");
+            history.push("/");
+            console.log(history, "history bad");
+          }
+        }, 3000);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          displaySnackbarMessage("Log in failed!", "error");
+        }
+        if (history !== undefined) {
+          console.log(history, "history yaar");
+          history.push("/login");
+          console.log(history, "history bad");
+        }
+      });
+    console.log(history, "history mistery");
+  };
+
   const validationSchema = yup.object().shape({
-    email: yup.string().email("Email is invalid").required("Required"),
+    customerEmail: yup.string().email("Email is invalid").required("Required"),
     password: yup.string().required("Please enter your password"),
   });
 
@@ -64,16 +105,22 @@ const Registrate = () => {
                   >
                     <TextField
                       fullWidth
-                      name="email"
-                      id="email"
+                      name="customerEmail"
+                      id="customerEmail"
                       label="Email"
                       variant="outlined"
-                      value={values.email}
+                      value={values.customerEmail}
                       type="text"
                       helperText={
-                        errors.email && touched.email ? errors.email : null
+                        errors.customerEmail && touched.customerEmail
+                          ? errors.customerEmail
+                          : null
                       }
-                      error={errors.email && touched.email ? true : false}
+                      error={
+                        errors.customerEmail && touched.customerEmail
+                          ? true
+                          : false
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                       required
@@ -145,6 +192,7 @@ const Registrate = () => {
                         disabled={isSubmitting}
                         color="primary"
                         text="LOG IN"
+                        onClick={() => login(values)}
                       />
                     </Link>
                     <hr></hr>
@@ -163,4 +211,4 @@ const Registrate = () => {
   );
 };
 
-export default Registrate;
+export default Login;

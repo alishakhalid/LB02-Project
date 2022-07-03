@@ -8,16 +8,16 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { clothingProps } from "../../Props/Clothing";
 import TextButton from "../atoms/Button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const Clothes = ({
-  clothingId,
   clothingDescription,
   clothingImage,
   clothingName,
   clothingPrice,
   clothingType,
 }: clothingProps) => {
+  const { clothingId } = useParams();
   return (
     <Card>
       <div className="card">
@@ -25,7 +25,7 @@ export const Clothes = ({
           component="img"
           image={clothingImage}
           alt="Clothing piece"
-          height="250"
+          height="550"
         />
         <CardContent className="card-body">
           <Typography variant="h4" className="cardTitle">
@@ -34,10 +34,9 @@ export const Clothes = ({
           <Typography className="card-text" variant="body2" color="secondary">
             {clothingDescription}
           </Typography>
-          <Typography>Price CHF: {clothingPrice}</Typography>
-          {/* <Typography>Clothing Category: {clothingType}</Typography> */}
+          <Typography>CHF: {clothingPrice}</Typography>
         </CardContent>
-        <Link to={"/clothes/category/" + clothingId}>
+        <Link to={`/clothes/formal-wear/${clothingId}`}>
           <TextButton text="View" color="primary" />
         </Link>
       </div>

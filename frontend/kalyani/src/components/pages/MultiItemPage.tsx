@@ -14,13 +14,10 @@ import InputBase from "@mui/material/InputBase";
 const SearchStyle = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
+  backgroundColor: "#b2dfdb",
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
+  marginBottom: "5%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
