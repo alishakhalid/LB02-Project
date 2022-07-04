@@ -22,9 +22,6 @@ public class CartClothing {
     @Column(name = "cart_clothing_id", nullable = false)
     private UUID cartClothing;
 
-    @Column(nullable = false)
-    private int amount;
-
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = EAGER)
     @JoinColumn(name = "id_clothing", updatable = false, insertable = false, nullable = false,
             referencedColumnName = "clothing_id")

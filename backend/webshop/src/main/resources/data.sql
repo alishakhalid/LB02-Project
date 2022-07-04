@@ -116,6 +116,6 @@ INSERT INTO public.clothing (clothing_id,clothing_description,clothing_image,clo
  'a88378bf-09b0-4fc7-a1be-0388a8a6ebfb'::uuid,
  'd03cae72-ffc3-46ee-9f90-9b56cbe8211a'::uuid);
 
-INSERT INTO public.cart_clothing (cart_clothing_id,amount,id_cart,id_clothing) VALUES
-('340691a8-f642-11ec-b939-0242ac120002'::uuid,3,'4c0a64eb-0f61-44f6-96a4-35ac62b35283'::uuid,'090f3d7c-f6ad-11ec-b939-0242ac120002'::uuid);
+INSERT INTO public.cart_clothing (cart_clothing_id,id_cart,id_clothing) VALUES
+('340691a8-f642-11ec-b939-0242ac120002'::uuid,'4c0a64eb-0f61-44f6-96a4-35ac62b35283'::uuid,'090f3d7c-f6ad-11ec-b939-0242ac120002'::uuid);
 
