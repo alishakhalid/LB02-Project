@@ -1,11 +1,11 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
+import { IconContext } from "react-icons";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { IconContext } from "react-icons";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { SidebarData } from "./SidebarData";
-import Submenu from "../organisms/Submenu";
 import "../../styling/Navbar.css";
+import Submenu from "../organisms/Submenu";
+import { SidebarData } from "./SidebarData";
 
 const Nav = styled("div")`
   display: flex;

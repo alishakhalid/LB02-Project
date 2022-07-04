@@ -1,13 +1,5 @@
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { SidebarType } from "../../types/SidebarType";
-import {
-  AiFillCaretDown,
-  AiFillCaretUp,
-  AiOutlineHistory,
-  AiOutlineHome,
-  AiOutlineMoneyCollect,
-  AiOutlineUser,
-} from "react-icons/ai";
-import { FaCog, FaOpencart } from "react-icons/fa";
 
 export const SidebarData: SidebarType[] = [
   {

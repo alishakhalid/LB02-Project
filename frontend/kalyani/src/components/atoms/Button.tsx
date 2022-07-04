@@ -1,6 +1,4 @@
 import Button from "@mui/material/Button";
-import React from "react";
-import theme from "../../config/Theme";
 import { buttonProps } from "../../Props/ButtonProps";
 
 const TextButton = (props: buttonProps) => {

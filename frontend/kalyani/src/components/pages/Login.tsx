@@ -1,19 +1,17 @@
-import React, { FC, useState, useContext } from "react";
 import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
-import { Formik, Form, FormikProps } from "formik";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Form, Formik, FormikProps } from "formik";
+import * as H from "history";
+import { FC, useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
-import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
+import Context from "../../context/SnackbarContext";
+import api from "../../services/ApiService";
 import "../../styling/Registration.css";
 import { LoginType } from "../../types/LoginType";
 import TextButton from "../atoms/Button";
-import { Link } from "react-router-dom";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import theme from "../../config/Theme";
-import AuthService from "../../services/Auth-Service";
-import api from "../../services/ApiService";
-import * as H from "history";
-import Context from "../../context/SnackbarContext";
+import Header from "../molecules/Header";
+import Footer from "../molecules/Footer";
 
 export interface RouteComponentProps {
   history?: H.History;
@@ -36,14 +34,11 @@ const Login: FC<RouteComponentProps> = ({ history }): JSX.Element => {
     api
       .post("/customer/signin", params)
       .then((response) => {
-        console.log("success");
         displaySnackbarMessage("Logged in successfully!", "success");
         localStorage.setItem("auth", response.data.token);
         setTimeout(() => {
           if (history !== undefined) {
-            console.log(history, "history yaar");
             history.push("/");
-            console.log(history, "history bad");
           }
         }, 3000);
       })
@@ -52,12 +47,9 @@ const Login: FC<RouteComponentProps> = ({ history }): JSX.Element => {
           displaySnackbarMessage("Log in failed!", "error");
         }
         if (history !== undefined) {
-          console.log(history, "history yaar");
           history.push("/login");
-          console.log(history, "history bad");
         }
       });
-    console.log(history, "history mistery");
   };
 
   const validationSchema = yup.object().shape({

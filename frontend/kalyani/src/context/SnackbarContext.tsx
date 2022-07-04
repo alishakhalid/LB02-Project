@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
-import { SnackbarVariants } from "../types/SnackbarVariants";
 import Snackbar from "../components/atoms/Snackbar";
+import { SnackbarVariants } from "../types/SnackbarVariants";
 
 /**
  * SnackbarContextType defines the provided values

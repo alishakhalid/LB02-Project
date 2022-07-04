@@ -1,8 +1,7 @@
-import React from "react";
-import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
-import Cart from "./Cart";
 import "../../styling/Checkout.css";
+import Header from "../molecules/Header";
+import Footer from "../molecules/Footer";
+import Cart from "./Cart";
 
 export default function Checkout() {
   return (

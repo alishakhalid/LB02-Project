@@ -1,15 +1,14 @@
-import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
-import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
-import { clothingProps } from "../../Props/Clothing";
-import Clothes from "./Clothes";
 import { Container } from "@mui/material";
-import ClothingService from "../../services/ClothingService";
-import clothingType from "../../types/ClothingEnum";
-import { ClothingEnumType } from "../../types/ClothingEnum";
-import { styled, alpha } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
+import { useEffect, useState } from "react";
+import { clothingProps } from "../../Props/Clothing";
+import ClothingService from "../../services/ClothingService";
+import clothingType, { ClothingEnumType } from "../../types/ClothingEnum";
+import Header from "../molecules/Header";
+import Footer from "../molecules/Footer";
+import Clothes from "./Clothes";
 
 const SearchStyle = styled("div")(({ theme }) => ({
   position: "relative",

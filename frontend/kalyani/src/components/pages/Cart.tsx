@@ -1,14 +1,12 @@
-import React from "react";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { Grid, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { CartType } from "../../types/CartType";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import { Grid, Paper } from "@mui/material";
 import TextButton from "../atoms/Button";
 
 export const Cart = ({

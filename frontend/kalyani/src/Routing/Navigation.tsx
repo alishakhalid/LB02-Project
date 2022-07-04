@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Registrate from "../components/pages/Registration";
+import AboutUs from "../components/pages/AboutUs";
 import Checkout from "../components/pages/CheckoutPage";
 import Homepage from "../components/pages/Homepage";
 import Login from "../components/pages/Login";
 import MultiItemPage from "../components/pages/MultiItemPage";
-import SingleItemPage from "../components/pages/SingleItemPage";
 import Order from "../components/pages/Order";
-import AboutUs from "../components/pages/AboutUs";
+import Registrate from "../components/pages/Registration";
+import SingleItemPage from "../components/pages/SingleItemPage";
+
+//todo: use SecureRoute for login
 
 export default function Navigate() {
   return (

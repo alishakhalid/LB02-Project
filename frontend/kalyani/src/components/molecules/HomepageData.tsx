@@ -1,24 +1,24 @@
 export const itemData = [
   {
-    img: "https://i.pinimg.com/736x/2c/f2/14/2cf214da02daa83d034aa91114fd530a.jpg",
+    img: "https://i.pinimg.com/736x/41/86/80/418680c973c18fbf2aab67acd367ef19.jpg",
     title: "FORMAL",
     rows: 2,
     cols: 2,
   },
   {
-    img: "https://image.suratwholesaleshop.com/data/2021y/January/19250/Casual-Wear-Light-Pink-Printed-Work-Lawn-Cambric-Pakistani-Suit-MAJESTY-1001.jpg",
+    img: "https://www.sanasafinaz.com/media/catalog/product/s/s/ss22ese316_1_.jpg?width=613&height=920&canvas=613:920&optimize=medium&bg-color=255,255,255&fit=bounds",
     title: "CASUAL",
     rows: 2,
     cols: 2,
   },
   {
-    img: "https://cdn.shopify.com/s/files/1/0539/6892/8967/products/AJJD-04-2_360x.jpg?v=1656137912",
+    img: "https://cdn.shopify.com/s/files/1/2337/7003/products/0011_33_eba9925e-34f7-4742-a122-98155898b2cf_700x.jpg?v=1656145462",
     title: "STITCHED",
     rows: 2,
     cols: 2,
   },
   {
-    img: "https://www.sanasafinaz.com/media/catalog/product/2/a/2a-front_3.jpg?optimize=medium&bg-color=255,255,255&fit=bounds&height=600&width=388&canvas=388:600&dpr=2",
+    img: "https://cdn.shopify.com/s/files/1/2337/7003/products/FTA-03-01_800x1200_24bfdb39-d9aa-4a12-8904-0c594321b8bf_700x.jpg?v=1645726659",
     title: "UNSTITCHED",
     rows: 2,
     cols: 2,

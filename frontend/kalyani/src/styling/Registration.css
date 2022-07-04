@@ -1,15 +1,3 @@
-  /* .registrationForm {
-  width: 50%;
-  text-align: center;
-  position: relative;
-align-self: center;
-  transform: translate(-50%, 20%);
-  padding: 60px;
-  background-color:rgba(178, 223, 219, 1);
-  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.4);
-  
-} */
-
 .title {
   color: #fff;
   text-align: center;
@@ -34,10 +22,6 @@ margin: 0 auto;
 margin-bottom: 5%;
 }
 
-/* .css-4mjh2z-MuiGrid-root{
-  margin-bottom: 3%;
-} */
-
 .MuiOutlinedInput-input{
   background-color: #fff !important;
   border-radius: 4px;
@@ -54,7 +38,3 @@ margin-bottom: 5%;
 .css-mbhbfv-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
   color: #000000 !important;
 }
-
-/* .MuiInputBase-root {
-  margin-bottom: 5%;
-} */

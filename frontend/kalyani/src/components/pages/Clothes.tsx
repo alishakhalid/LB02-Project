@@ -1,14 +1,8 @@
-import {
-  CardContent,
-  CardMedia,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import React from "react";
+import { CardContent, CardMedia, Typography } from "@mui/material";
 import { Card } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import { clothingProps } from "../../Props/Clothing";
 import TextButton from "../atoms/Button";
-import { Link, useParams } from "react-router-dom";
 
 export const Clothes = ({
   clothingDescription,
@@ -18,6 +12,7 @@ export const Clothes = ({
   clothingType,
 }: clothingProps) => {
   const { clothingId } = useParams();
+
   return (
     <Card>
       <div className="card">

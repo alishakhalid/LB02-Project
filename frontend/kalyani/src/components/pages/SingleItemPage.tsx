@@ -1,25 +1,19 @@
-import Box from "@mui/material/Box";
-import { alpha } from "@mui/material/styles";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
-import Clothes from "./Clothes";
-import { clothingProps } from "../../Props/Clothing";
 import {
   Autocomplete,
-  Card,
-  CardContent,
   Container,
   Grid,
   TextField,
   Typography,
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
-import TextButton from "../atoms/Button";
-import "../../styling/SingleItem.css";
+import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { clothingProps } from "../../Props/Clothing";
 import ClothingService from "../../services/ClothingService";
-import clothingSize from "../../types/ClothingSize";
+import "../../styling/SingleItem.css";
+import TextButton from "../atoms/Button";
+import Header from "../molecules/Header";
+import Footer from "../molecules/Footer";
 
 export default function SingleProductPage(_clothingId: any) {
   const { clothingId } = useParams();
@@ -47,10 +41,11 @@ export default function SingleProductPage(_clothingId: any) {
 
   useEffect(() => {
     if (clothingId !== undefined) {
+      console.log("Is it here?");
       ClothingService.getClothingById(clothingId)
         .then((res) => {
           setClothing(res.data);
-          console.log(clothing, "clothing????");
+          console.log(clothing, res.data, "res data and clothes are you here");
         })
         .then(getSize);
     }

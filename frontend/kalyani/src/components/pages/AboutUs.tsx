@@ -11,7 +11,7 @@ import PsychologyIcon from "@mui/icons-material/Psychology";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
+import Footer from "../molecules/Footer";
 import { Grid } from "@mui/material";
 import { Container } from "react-bootstrap";
 

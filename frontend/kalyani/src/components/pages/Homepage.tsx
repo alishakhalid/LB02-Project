@@ -1,12 +1,11 @@
-import * as React from "react";
+import { ImageListItemBar } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
-import { itemData } from "../molecules/HomepageData";
-import { IconButton, ImageListItemBar } from "@mui/material";
-import TextButton from "../atoms/Button";
 import { Link } from "react-router-dom";
+import TextButton from "../atoms/Button";
+import Header from "../molecules/Header";
+import { itemData } from "../molecules/HomepageData";
+import Footer from "../molecules/Footer";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {

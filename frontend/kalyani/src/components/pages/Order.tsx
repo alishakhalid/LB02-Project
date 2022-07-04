@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
+import Footer from "../molecules/Footer";
 
 export default function Order() {
   return (

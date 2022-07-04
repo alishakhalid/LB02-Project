@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  TextField,
-  makeStyles,
-  createStyles,
-  Theme,
-} from "@material-ui/core";
-import { Formik, Form, FormikProps } from "formik";
+import { Grid, TextField } from "@material-ui/core";
+import { Autocomplete } from "@mui/material";
+import Button from "@mui/material/Button";
+import { Form, Formik, FormikProps } from "formik";
+import { useContext, useEffect, useState } from "react";
 import * as yup from "yup";
-import Header from "../molecules/Header";
-import Footer from "../organisms/Footer";
+import Context from "../../context/SnackbarContext";
+import CountryService from "../../services/CountryService";
+import CustomerService from "../../services/CustomerService";
+import LocationService from "../../services/LocationService";
 import "../../styling/Registration.css";
 import { RegistrationType } from "../../types/RegistrationType";
-import { Autocomplete, Typography } from "@mui/material";
-import TextButton from "../atoms/Button";
-import CustomerService from "../../services/CustomerService";
-import CountryService from "../../services/CountryService";
-import ApiService from "../../services/ApiService";
-import LocationService from "../../services/LocationService";
-import { CityType } from "../../types/CityType";
-import { CountryType } from "../../types/CountryType";
-import Button from "@mui/material/Button";
+import Header from "../molecules/Header";
+import Footer from "../molecules/Footer";
 
 const Registrate = () => {
   const [country, setCountry] = useState([]);
   const [cities, setCities] = useState([]);
+  const { displaySnackbarMessage } = useContext(Context);
 
   const getCountries = () => {
     return CountryService.getCountries()
@@ -37,9 +29,6 @@ const Registrate = () => {
       .then((res) => setCities(res.data))
       .catch((err) => console.log(err, "failed"));
   };
-
-  console.log(country, "country got it?");
-  console.log(cities, "cities?");
 
   const createUser = (values: RegistrationType) => {
     return CustomerService.createCustomer(values);
@@ -74,6 +63,7 @@ const Registrate = () => {
 
   const handleSubmit = (values: RegistrationType) => {
     createUser(values);
+    displaySnackbarMessage("Created User successfully", "success");
     //alert(JSON.stringify(values));
   };
 
