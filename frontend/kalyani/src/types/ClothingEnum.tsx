@@ -2,7 +2,7 @@ export type ClothingEnumType = {
   [type: string]: string;
 };
 
-const clothingType: ClothingEnumType = {
+export const clothingType: ClothingEnumType = {
   FORMAL: "Formal",
   STITCHED: "Stitched",
   UNSTITCHED: "Unstitched",

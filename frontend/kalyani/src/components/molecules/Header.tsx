@@ -10,9 +10,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styling/Header.css";
+import Context from "../../context/SnackbarContext";
 import Sidebar from "./Sidebar";
 
 export default function Header() {
@@ -24,9 +25,11 @@ export default function Header() {
   const [isLogged, setisLogged] = useState<boolean>(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const { displaySnackbarMessage } = useContext(Context);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    logout();
   };
 
   const handleMobileMenuClose = () => {
@@ -44,6 +47,12 @@ export default function Header() {
 
   const handleClickLogin = () => {
     setisLogged(!isLogged);
+  };
+
+  const logout = () => {
+    navigate("/login");
+    localStorage.removeItem("email");
+    displaySnackbarMessage("Logged out successfully", "success");
   };
 
   const menuId = "primary-search-account-menu";
@@ -93,7 +102,7 @@ export default function Header() {
           style={{ backgroundColor: "#b2dfdb" }}
           onClick={() => navigate("/checkout")}
         >
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={1} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -107,11 +116,11 @@ export default function Header() {
           aria-haspopup="true"
           color="inherit"
           style={{ backgroundColor: "#b2dfdb" }}
-          onClick={() => (isLogged ? navigate("/") : navigate("/login"))}
+          onClick={() => logout()}
         >
           <AccountCircle />
         </IconButton>
-        {isLogged ? <p>Logout</p> : <p>Login</p>}
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -153,7 +162,9 @@ export default function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <Link to="/login">
+                <AccountCircle />
+              </Link>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

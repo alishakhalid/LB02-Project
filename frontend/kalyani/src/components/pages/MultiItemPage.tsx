@@ -9,6 +9,7 @@ import clothingType, { ClothingEnumType } from "../../types/ClothingEnum";
 import Header from "../molecules/Header";
 import Footer from "../molecules/Footer";
 import Clothes from "./Clothes";
+import "../../styling/Multi.css";
 
 const SearchStyle = styled("div")(({ theme }) => ({
   position: "relative",
@@ -63,7 +64,7 @@ function AllClothesPage() {
               {isLoading && <h1>Page is loading...</h1>}
               <SearchStyle>
                 <StyledInputBase
-                  placeholder="Search…"
+                  placeholder="Search"
                   inputProps={{ "aria-label": "search" }}
                   onChange={(e) => setSearch(e.target.value)}
                   type="text"
@@ -86,6 +87,7 @@ function AllClothesPage() {
                     return (
                       <Grid item>
                         <Clothes
+                          clothingId={clothing.clothingId}
                           clothingImage={clothing.clothingImage}
                           clothingName={clothing.clothingName}
                           clothingPrice={clothing.clothingPrice}

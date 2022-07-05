@@ -1,18 +1,17 @@
 import { CardContent, CardMedia, Typography } from "@mui/material";
 import { Card } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { clothingProps } from "../../Props/Clothing";
 import TextButton from "../atoms/Button";
 
 export const Clothes = ({
+  clothingId,
   clothingDescription,
   clothingImage,
   clothingName,
   clothingPrice,
   clothingType,
 }: clothingProps) => {
-  const { clothingId } = useParams();
-
   return (
     <Card>
       <div className="card">
@@ -32,7 +31,7 @@ export const Clothes = ({
           <Typography>CHF: {clothingPrice}</Typography>
         </CardContent>
         <Link to={`/clothes/formal-wear/${clothingId}`}>
-          <TextButton text="View" color="primary" />
+          <TextButton text="View" color="primary" className="styleButton" />
         </Link>
       </div>
     </Card>

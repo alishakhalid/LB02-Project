@@ -14,24 +14,12 @@ import "../../styling/SingleItem.css";
 import TextButton from "../atoms/Button";
 import Header from "../molecules/Header";
 import Footer from "../molecules/Footer";
+import CartService from "../../services/CartService";
 
 export default function SingleProductPage(_clothingId: any) {
   const { clothingId } = useParams();
   const [clothing, setClothing] = useState<clothingProps>({} as clothingProps);
   const [size, setSize] = useState([]);
-  const [quantity, setQuantity] = useState(1);
-
-  const handleIncrement = () => {
-    if (quantity < 50) {
-      setQuantity((prevCount) => prevCount + 1);
-    }
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevCount) => prevCount - 1);
-    }
-  };
 
   const getSize = () => {
     ClothingService.getAllClothingSize()
@@ -39,13 +27,15 @@ export default function SingleProductPage(_clothingId: any) {
       .catch((err) => err);
   };
 
+  const addClothing = () => {
+    return CartService.addClothingToCart(clothingId);
+  };
+
   useEffect(() => {
     if (clothingId !== undefined) {
-      console.log("Is it here?");
       ClothingService.getClothingById(clothingId)
         .then((res) => {
           setClothing(res.data);
-          console.log(clothing, res.data, "res data and clothes are you here");
         })
         .then(getSize);
     }
@@ -99,23 +89,6 @@ export default function SingleProductPage(_clothingId: any) {
                   CHF {clothing.clothingPrice}
                 </Typography>
               </Grid>
-              <Grid item className="button">
-                <div className="quantity-input">
-                  <button
-                    className="quantity-input__modifier quantity-input__modifier--left"
-                    onClick={handleDecrement}
-                  >
-                    &mdash;
-                  </button>
-                  <div className="quantity-input__screen">{quantity}</div>
-                  <button
-                    className="quantity-input__modifier quantity-input__modifier--right"
-                    onClick={handleIncrement}
-                  >
-                    &#xff0b;
-                  </button>
-                </div>
-              </Grid>
               <Grid item>
                 <Autocomplete
                   id="clothingSize"
@@ -131,6 +104,7 @@ export default function SingleProductPage(_clothingId: any) {
                   color="primary"
                   text="Add to cart"
                   className="buttonStyle"
+                  onClick={() => addClothing()}
                 />
               </Grid>
               <Grid item className="button">

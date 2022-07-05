@@ -12,6 +12,7 @@ import { LoginType } from "../../types/LoginType";
 import TextButton from "../atoms/Button";
 import Header from "../molecules/Header";
 import Footer from "../molecules/Footer";
+import { useNavigate } from "react-router-dom";
 
 export interface RouteComponentProps {
   history?: H.History;
@@ -20,13 +21,14 @@ export interface RouteComponentProps {
 const Login: FC<RouteComponentProps> = ({ history }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const { displaySnackbarMessage } = useContext(Context);
+  const navigate = useNavigate();
 
   const initialValues: LoginType = {
     customerEmail: "",
     password: "",
   };
 
-  const login = (data: any) => {
+  const login = (data: LoginType) => {
     let params = {
       customerEmail: data.customerEmail,
       password: data.password,
@@ -36,19 +38,12 @@ const Login: FC<RouteComponentProps> = ({ history }): JSX.Element => {
       .then((response) => {
         displaySnackbarMessage("Logged in successfully!", "success");
         localStorage.setItem("auth", response.data.token);
-        setTimeout(() => {
-          if (history !== undefined) {
-            history.push("/");
-          }
-        }, 3000);
+        localStorage.setItem("email", response.data.email);
+        navigate("/");
       })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          displaySnackbarMessage("Log in failed!", "error");
-        }
-        if (history !== undefined) {
-          history.push("/login");
-        }
+      .catch((_error) => {
+        displaySnackbarMessage("Log in failed!", "error");
+        navigate("/login");
       });
   };
 
@@ -179,14 +174,13 @@ const Login: FC<RouteComponentProps> = ({ history }): JSX.Element => {
                     xs={11}
                     className="submitButton"
                   >
-                    <Link to="/">
-                      <TextButton
-                        disabled={isSubmitting}
-                        color="primary"
-                        text="LOG IN"
-                        onClick={() => login(values)}
-                      />
-                    </Link>
+                    <TextButton
+                      disabled={isSubmitting}
+                      color="primary"
+                      text="LOG IN"
+                      onClick={() => login(values)}
+                    />
+
                     <hr></hr>
                     <Link to="/registrate">
                       <TextButton color="primary" text="REGISTRATE HERE" />

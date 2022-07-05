@@ -6,6 +6,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { useParams } from "react-router-dom";
+import CartService from "../../services/CartService";
 import { CartType } from "../../types/CartType";
 import TextButton from "../atoms/Button";
 
@@ -15,8 +17,15 @@ export const Cart = ({
   clothingSize,
   shippingPrice,
   totalPrice,
-  amount,
 }: CartType) => {
+  const { clothingId } = useParams();
+
+  const delteItem = () => {
+    if (clothingId !== undefined) {
+      CartService.deleteClothingFromCartById(clothingId);
+    }
+  };
+
   return (
     <>
       <Grid
@@ -27,9 +36,6 @@ export const Cart = ({
         style={{ margin: "3vh" }}
       >
         <Grid item xs={7}>
-          <Typography component="div" variant="h4" className="text">
-            Cart
-          </Typography>
           <Paper style={{ backgroundColor: "black" }}>
             <Card sx={{ display: "flex", border: "2px", borderColor: "black" }}>
               <CardMedia
@@ -51,37 +57,20 @@ export const Cart = ({
                   >
                     Size: {clothingSize}
                   </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    component="div"
-                    style={{ textAlign: "left" }}
-                  >
-                    Quantiy: {amount}
-                  </Typography>
                 </CardContent>
                 <Box
                   sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}
-                >
-                  <IconButton aria-label="delete">
-                    <DeleteOutlinedIcon
-                      sx={{ height: 38, width: 38 }}
-                      style={{
-                        alignItems: "right",
-                        color: "red",
-                        alignSelf: "right",
-                      }}
-                    />
-                  </IconButton>
-                </Box>
+                ></Box>
               </Box>
             </Card>
           </Paper>
         </Grid>
         <Grid item sm={5}>
-          <Typography component="div" variant="h4" className="text">
-            Paying process
-          </Typography>
+          <Typography
+            component="div"
+            variant="h4"
+            className="text"
+          ></Typography>
           <Paper>
             <Typography variant="h4" gutterBottom className="text">
               Total Price

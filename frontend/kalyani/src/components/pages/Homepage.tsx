@@ -43,7 +43,7 @@ export default function QuiltedImageList() {
               title={item.title}
               position="top"
               actionIcon={
-                <Link to="/clothes/formal-wear">
+                <Link to={`/${item.path}`}>
                   <TextButton text="VIEW" color="primary" />
                 </Link>
               }

@@ -4,5 +4,4 @@ export interface CartType {
   clothingSize: string;
   shippingPrice: number;
   totalPrice: number;
-  amount: number;
 }
