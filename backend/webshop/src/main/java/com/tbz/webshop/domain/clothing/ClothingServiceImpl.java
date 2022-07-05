@@ -2,10 +2,13 @@ package com.tbz.webshop.domain.clothing;
 
 
 import com.tbz.webshop.domain.cart.Cart;
-import com.tbz.webshop.domain.clothingSize.ClothingSize;
+import com.tbz.webshop.domain.cart.CartRepository;
+import com.tbz.webshop.domain.cartClothing.CartClothing;
+import com.tbz.webshop.domain.cartClothing.CartClothingRepository;
 import com.tbz.webshop.domain.clothingSize.ClothingSizeRepository;
 import com.tbz.webshop.domain.clothingType.ClothingType;
 import com.tbz.webshop.domain.clothingType.ClothingTypeRepository;
+import java.security.Principal;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,12 @@ public class ClothingServiceImpl implements ClothingService{
     private ClothingSizeRepository clothingSizeRepository;
     @Autowired
     private ClothingTypeRepository clothingTypeRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private CartClothingRepository cartClothingRepository;
 
 
     /**
@@ -76,12 +85,6 @@ public class ClothingServiceImpl implements ClothingService{
         clothingRepository.deleteById(id);
     }
 
-    //TODO create method?
-    @Override
-    public Cart addClothingToCart(Cart cart) throws InstanceAlreadyExistsException {
-        return null;
-    }
-
     @Override
     public List<ClothingType> findAllClothingTypes() throws NullPointerException {
         List<ClothingType> clothingTypeList = clothingTypeRepository.findAll();
@@ -109,5 +112,21 @@ public class ClothingServiceImpl implements ClothingService{
             return clothingList;
         } else
             throw new NullPointerException("Clothing List is empty");
+    }
+
+    @Override
+    public Cart getCartItems(Principal principal) {
+        return cartRepository.getCartItems(principal.getName());
+    }
+    @Override
+    public CartClothing addToCartClothing(Principal principal, UUID id)
+        throws InstanceAlreadyExistsException, InstanceNotFoundException {
+        Clothing clothing = clothingRepository.getClothingByClothingId(id);
+        Cart cart = cartRepository.findCartByCustomerEmail(principal.getName());
+        CartClothing cartClothing = new CartClothing(clothing, cart);
+        if(id.equals(null)){
+            throw new InstanceNotFoundException("halloooo");
+        }
+        return cartClothingRepository.save(cartClothing);
     }
 }

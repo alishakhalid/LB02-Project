@@ -19,8 +19,8 @@ import java.util.UUID;
 public class Cart {
 
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "UUID")
     @Column(name = "cart_id")
     private UUID cartId;
 

@@ -1,9 +1,11 @@
 package com.tbz.webshop.domain.clothing;
 
 import com.tbz.webshop.domain.cart.Cart;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -87,16 +89,35 @@ public class ClothingController {
         }
     }
 
+    @GetMapping("/clothingSizes")
+    public ResponseEntity findAllClothingSizes(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(clothingService.findAllClothingSizes());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity getCartItemsOfPrincipal(@AuthenticationPrincipal Principal principal){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(clothingService.getCartItems
+                (principal));
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
     /**
      * This is the Endpoint that is responsible for adding a new clothing item to a cart.
      *
-     * @param clothingItem the information that is needed to add a new item to a cart that is given through the requestBody
+     * @param clothingId the information that is needed to add a new item to a cart that is given through the requestBody
      * @return either returns the newly added item or the error message that the item was not added
      */
-    @PostMapping(value = "/cart")
-    public ResponseEntity addClothingToCart(@RequestBody Cart clothingItem) {
+    @PostMapping(value = "/cart/{id}")
+    public ResponseEntity addClothingToCart(@AuthenticationPrincipal Principal principal, UUID id) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(clothingService.addClothingToCart(clothingItem));
+            return ResponseEntity.status(HttpStatus.CREATED).body(clothingService.addToCartClothing(principal, id));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (InstanceAlreadyExistsException e) {
@@ -106,13 +127,6 @@ public class ClothingController {
         }
     }
 
-    @GetMapping("/clothingSizes")
-    public ResponseEntity findAllClothingSizes(){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(clothingService.findAllClothingSizes());
-        } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
+
 
 }

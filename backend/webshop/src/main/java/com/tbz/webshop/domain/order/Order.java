@@ -24,8 +24,8 @@ import static javax.persistence.FetchType.EAGER;
 public class Order {
 
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "UUID")
     @Column(name = "ordering_id")
     private UUID orderingId;
 
